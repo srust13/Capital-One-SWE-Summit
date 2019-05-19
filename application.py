@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
+from helpers import listParksAndStates
 
 
 app = Flask(__name__)
@@ -32,8 +33,12 @@ def index():
 
 @app.route("/search", methods=["GET","POST"])
 def search():
-    
-    return render_template("search.html")
+    #parks=["Zion","Yellow"]
+    #states=["hi"]
+    parks=listParksAndStates()[0]
+    states=listParksAndStates()[1]
+
+    return render_template("search.html", parks, states)
     '''
     if request.method=="POST":
         return render_template("search.html") 

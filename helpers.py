@@ -22,21 +22,27 @@ def listParksAndStates():
     #only returns 50 parks by default. use to calculate total numb of parks 
     endpoint = requests.get(f"{url}api_key={api}")
     data = endpoint.json()   
-    count = data["total"]
-
+    #count = data["total"]
+    
+    count=490
     endpoint = requests.get(f"{url}limit={count}&api_key={api}")
     data=endpoint.json()
+    '''
     for park in data["data"]:
         parks.append(park["fullName"])
         #if park extends over multiple states, append each state to a set
         if(len(park["states"])>2):
             for value in park["states"].split(","):
                 states.add(value)
-
+    #states=list(states)
+    for i in states:
+        print(i)
     #sort alphabetically in place and return 
-    parks.sort(), states.sort() 
+    #parks.sort(), states.sort() 
     return parks, states
 
-
-#numParksByState()
-print(listParksAndStates()[1])
+'''
+numParksByState()
+#listParksAndStates()
+#print(listParksAndStates()[0])
+#print(listParksAndStates()[1])

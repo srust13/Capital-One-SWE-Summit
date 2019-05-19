@@ -11,11 +11,15 @@
             
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
             <select size="4">
+                {% for park in parks %}
+                <option value="{{park}}"><a href="#{{park}}"></a></option>
+                <!--
                 <option value="Zion"><a href="#zion">Zion</a></option>
                 <option value="Yosemite"><a href="#yosemite">Yosemite</a></option>
                 <option value="Alaska"><a href="#alaska">Alaska</a></option>
                 <option value="California"><a href="#california">California</a></option>
                 <option value="Colorodo"><a href="#colorodo">Colorodo</a></option>
+                -->
             </select>
         </div>
     </div>
