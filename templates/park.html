@@ -5,5 +5,18 @@
 {% endblock %}
 
 {% block main %}
-    <h1>This is {{park}}</h1>    
+    <h1><b>Welcome to {{park}}</b></h1>    
+    <div class="space"></div>
+    
+    <div class="w3-container">
+        <h3><i><u>Visitor Center Information</u></i></h3>  
+        {%for visitorCenter in visitorCentersList%}
+            <p><b>Full name:</b> {{ visitorCenter.get("name"," Not available :(") }}             </p>
+            <p><b>Description:</b> {{ visitorCenter.get("description", "Not available :(") }}    </p>
+            <p><a href= {{ visitorCenter.get("directionsUrl","") }}><u><b>Directions:</b></u></a> {{ visitorCenter.get("directionsInfo","Not available :(") }}  </p>
+            <br>            
+        {% endfor %}
+    </div>
+
+
 {% endblock %}

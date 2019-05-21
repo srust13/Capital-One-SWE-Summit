@@ -1,13 +1,13 @@
 import requests, json
 import urllib.request, json
 
-url="https://developer.nps.gov/api/v1/parks?"
+url="https://developer.nps.gov/api/v1"
 api= "nMeJTZeHbgdfQeRtllNPQImS4eP37B83Iu7Mt1Fe"
 
 #Generate a list of all the park names in a given state
-def listParksByState(state):
+def listParksByState(stateName):
     parks=[]   
-    endpoint = requests.get(f"{url}stateCode={state}&api_key={api}")
+    endpoint = requests.get(f"{url}/parks?stateCode={stateName}&api_key={api}")
 
     # Parse response
     data=endpoint.json()
@@ -16,27 +16,25 @@ def listParksByState(state):
     return parks
 
 #Generate a list of all the park names and the states to be used in the search bar
-def listParksAndStates():       
-     
+def listParksAndStates():            
     parks=[]
     states=set({})
     '''
     #only returns 50 parks by default. use to calculate total numb of parks 
     
-    endpoint = requests.get(f"{url}api_key={api}")
+    endpoint = requests.get(f"{url}/parks?api_key={api}")
     data = endpoint.json()      
     count=int(data["total"])
     
     #count ="500"
-    #endpoint = requests.get(f"{url}limit={count}&api_key={api}")    
+    #endpoint = requests.get(f"{url}/parks?limit={count}&api_key={api}")    
     #data = endpoint.json()
-    #print(data)
 
     #API seems to not function properly when making excessively large calls such as using limit="496", so multiple calls are made to the API to ensure it functions properly
     startCounter=1 
     limit=25
     while(startCounter<count):
-        endpoint = requests.get(f"{url}limit={limit}&start={startCounter}&api_key={api}") 
+        endpoint = requests.get(f"{url}/parks?limit={limit}&start={startCounter}&api_key={api}") 
         data = endpoint.json()
         for park in data["data"]:
             parks.append(park["fullName"])
@@ -64,6 +62,31 @@ def listParksAndStates():
     states=["AL","BC","CE","NJ","PT","YZ"]
     
     return parks, states
+
+#Generate information about visitor center such as "name", "description", "directionsInfo", and "directionsUrl"
+def visitorCenters(parkName):
+    endpoint = requests.get(f"{url}/visitorcenters?q={parkName}&api_key={api}")
+    data = endpoint.json()  
+    return data["data"]
+
+
+def campgrounds(parkName):
+    return
+
+def alertsList(parkName):
+    return
+
+def eventsList(parkName):
+    return
+
+def newsList(parkName):
+    return
+        
+
+
+
+print(visitorCenters("Zion"))
+#print(visitorCenters("Zion")[0]["name"])
 
 #print(listParksByState("ME"))
 listParksAndStates()

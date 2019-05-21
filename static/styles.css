@@ -57,3 +57,12 @@ nav .navbar-brand .green
  option:hover{
   cursor: pointer;
  }
+
+ .w3-container{
+  text-align: left;
+ }
+
+ .space { 
+  margin-top: 300px; 
+}
+
