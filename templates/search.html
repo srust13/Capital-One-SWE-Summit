@@ -5,27 +5,27 @@
 {% endblock %}
 
 {% block main %}
-    <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Find a park</button>
-        <div id="myDropdown" class="dropdown-content">
-            
-            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-            <select size="4">
-                {% for park in parks %}
-                <option value="{{park}}"><a href="#{{park}}"></a></option>
-                <!--
-                <option value="Zion"><a href="#zion">Zion</a></option>
-                <option value="Yosemite"><a href="#yosemite">Yosemite</a></option>
-                <option value="Alaska"><a href="#alaska">Alaska</a></option>
-                <option value="California"><a href="#california">California</a></option>
-                <option value="Colorodo"><a href="#colorodo">Colorodo</a></option>
-                -->
-            </select>
-        </div>
-    </div>
+<h1>Search for a park by name</h1>
+<form action="/search" method="post">  
+  <select size="7" class="form-control" id="park" name="park">
+  {% for park in parks %}
+  <option value="{{park}}">{{park}}</option>
+  {% endfor %}
+  </select>
+  <button class="btn btn-primary" type="submit">Explore!</button>
+</form>
 
-    <script src="{{url_for('static', filename='filter.js')}}"></script>
+<br><br><br>
 
-    <h1>Hi my name is </h1>
+<h1>Search for a park by state</h1>
+<form action="/search" method="post">  
+  <select size="7" class="form-control" id="state" name="state">
+  {% for state in states %}
+  <option value="{{state}}">{{state}}</option>
+  {% endfor %}
+  </select>
+  <button class="btn btn-primary" type="submit">Explore!</button>
+</form>
+
 {% endblock %}
 

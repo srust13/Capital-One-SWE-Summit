@@ -33,18 +33,19 @@ def index():
 
 @app.route("/search", methods=["GET","POST"])
 def search():
-    #parks=["Zion","Yellow"]
-    #states=["hi"]
     parks=listParksAndStates()[0]
     states=listParksAndStates()[1]
-
-    return render_template("search.html", parks, states)
-    '''
     if request.method=="POST":
-        return render_template("search.html") 
+        park=request.form.get("park")
+        state=request.form.get("state")
+        
+        #If the user selected a park from the drop down, render park.html, else render state.html
+        if park:     
+            return render_template("park.html",park=park)
+        else:
+            return render_template("state.html",state=state)
     else:
-        return render_template("search.html")
-        '''
+        return render_template("search.html",parks=parks,states=states)
   
 @app.route("/advanced-search", methods=["GET","POST"])
 def advanced_search():
@@ -52,4 +53,3 @@ def advanced_search():
         return render_template("advanced-search.html") 
     else:
         return render_template("advanced-search.html")
-
