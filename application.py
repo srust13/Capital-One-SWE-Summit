@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from helpers import listParksAndStates, visitorCenters, campgrounds, alertsList, eventsList, newsList
+from helpers import listParksAndStates, getInfo
 
 app = Flask(__name__)
 
@@ -38,16 +38,12 @@ def search():
 
         #If the user selected a park from the drop down, render park.html, else render state.html
         if park:     
-            visitorCentersList=visitorCenters(park)
-            campsList = campgrounds(park)
-            alertsList = alerts(park)
-            articlesList = articles(park)
-            eventsList = events(park)
-            newsList = newsReleases(park)
-            return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campsList=campsList, alertsList=alertsList, articlesList=articlesList, 
-            eventsList=eventsList, newsList=newsList)
+            visitorCentersList=getInfo(park, "visitorCenters") 
+            campgroundsList=getInfo(park, "campgrounds")              
+            return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList)
         else:
             return render_template("state.html",state=state)
+
     else:
         return render_template("search.html",parks=parks,states=states)
   

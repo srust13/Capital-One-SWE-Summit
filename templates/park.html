@@ -5,18 +5,51 @@
 {% endblock %}
 
 {% block main %}
-    <h1><b>Welcome to {{park}}</b></h1>    
-    <div class="space"></div>
-    
-    <div class="w3-container">
+    <div>
+        <h1><b>Welcome to {{park}}</b></h1>         
+        <div class="space"></div>
+        <div class="pagejump"
+            <A HREF="#visitorcenter">Check out the visitor centers!</A>
+            <A HREF="#campgrounds">&emsp;Check out the campgrounds!</A>
+            <A HREF="#campgrounds">&emsp;Check out current alerts!</A>
+            <A HREF="#campgrounds">&emsp;Check out articles!</A>
+            <A HREF="#campgrounds">&emsp;Check out current events!</A>
+            <A HREF="#campgrounds">&emsp;Check out news releases!</A>
+        </div>
+    </div>
+    <br>
+    <A NAME="visitorcenter"></A>
+    <div class="container-fluid">
         <h3><i><u>Visitor Center Information</u></i></h3>  
         {%for visitorCenter in visitorCentersList%}
-            <p><b>Full name:</b> {{ visitorCenter.get("name"," Not available :(") }}             </p>
-            <p><b>Description:</b> {{ visitorCenter.get("description", "Not available :(") }}    </p>
-            <p><a href= {{ visitorCenter.get("directionsUrl","") }}><u><b>Directions:</b></u></a> {{ visitorCenter.get("directionsInfo","Not available :(") }}  </p>
+            <p><b>Full name:</b> {{ visitorCenter.get("name") or "No information available" }}             </p>
+            <p><b>Description:</b> {{ visitorCenter.get("description") or "No information available"}}    </p>
+            <p><a href= {{ visitorCenter.get("directionsUrl") or "javascript:;" }}><u><b>Directions:</b></u></a> {{ visitorCenter.get("directionsInfo") or "No information available"}}  </p>
             <br>            
         {% endfor %}
     </div>
+    
+    <A NAME="campgrounds"></A>
+    <div class="container-fluid">
+            <h3><i><u>Campground Information</u></i></h3>  
+            {%for campground in campgroundsList%}
+                <p><b>Full name:</b> {{ campground.get("name") or "No information  available"}}             </p>
+                <p><b>Description:</b> {{ campground.get("description") or "No information available"}}    </p>                
+                <p><b>Weather (plan accordingly!): </b> {{ campground.get("weatheroverview")  or "No information  available"}}             </p>   
+            
+                <p><b>Wheelchair Accessibility:</b>  {{ campground.get("accessibility").get("wheelchairaccess")  or "No information  available"}}    </p>
+                <p><b>Internet Connectivity:</b>  {{ campground.get("accessibility").get("internetconnectivity")  or "No information  available"}}    </p> 
+                <p><b>Cellphone Reception:</b>  {{ campground.get("accessibility").get("cellphonereception")  or "No information  available"}}    </p>  
+
+                <p><b>Bathroom Accessibility:</b>  {{ campground.get("amenities").get("toilets")[0]  or "No information  available"}}    </p>
+
+                <p><b>Additional Information:</b>  {{ campground.get("accessibility").get("additionalinfo")  or "No information  available"}}    </p>  
+
+                <p><a href={{campground.get("regulationsurl") or "javascript:;" }}><u><b>Regulations:</b></u></a> {{ campground.get("regulationsoverview") or "No information  available"}}    </p>
+                <p><a href={{campground.get("directionsurl") or "javascript:;" }}><u><b>Directions:</b></u></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
+                <br>            
+            {% endfor %}
+        </div>
 
 
 {% endblock %}

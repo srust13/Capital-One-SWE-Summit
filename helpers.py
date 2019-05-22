@@ -63,32 +63,18 @@ def listParksAndStates():
     
     return parks, states
 
-#Generate information about visitor center such as "name", "description", "directionsInfo", and "directionsUrl"
-def visitorCenters(parkName):
-    endpoint = requests.get(f"{url}/visitorcenters?q={parkName}&api_key={api}")
+#infoType can equal "visitorCenters", "campgrounds", "alerts", "events", "news"
+def getInfo(parkName, infoType):
+    endpoint = requests.get(f"{url}/{infoType}?q={parkName}&api_key={api}")
     data = endpoint.json()  
     return data["data"]
 
-
-def campgrounds(parkName):
-    return
-
-def alertsList(parkName):
-    return
-
-def eventsList(parkName):
-    return
-
-def newsList(parkName):
-    return
         
 
-
-
-print(visitorCenters("Zion"))
+#print(visitorCenters("Zion"))
 #print(visitorCenters("Zion")[0]["name"])
 
 #print(listParksByState("ME"))
-listParksAndStates()
+#listParksAndStates()
 #print(listParksAndStates()[0])
 #print(listParksAndStates()[1])
