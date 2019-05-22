@@ -8,17 +8,17 @@
     <div>
         <h1><b>Welcome to {{park}}</b></h1>         
         <div class="space"></div>
-        <div class="pagejump">
-            <A HREF="#visitorcenter">Check out the visitor centers!</A>
-            &emsp;<A HREF="#campgrounds">Check out the campgrounds!</A>
-            &emsp;<A HREF="#campgrounds">Check out current alerts!</A>
-            &emsp;<A HREF="#campgrounds">Check out articles!</A>
-            &emsp;<A HREF="#campgrounds">Check out current events!</A>
-            &emsp;<A HREF="#campgrounds">Check out news releases!</A>
+        <div class="d-flex justify-content-around">
+            <A HREF="#visitorcenters">Check out the visitor centers!</A>
+            <A HREF="#campgrounds">Check out the campgrounds!</A>
+            <A HREF="#alerts">Check out current alerts!</A>
+            <A HREF="#articles">Check out articles!</A>
+            <A HREF="#events">Check out current events!</A>
+            <A HREF="#news">Check out news releases!</A>
         </div>
     </div>
     <br>
-    <A NAME="visitorcenter"></A>
+    <A NAME="visitorcenters"></A>
     <div class="container-fluid">
         <h3><i><u>Visitor Center Information</u></i></h3>  
         {%for visitorCenter in visitorCentersList%}
@@ -31,25 +31,51 @@
     
     <A NAME="campgrounds"></A>
     <div class="container-fluid">
-            <h3><i><u>Campground Information</u></i></h3>  
-            {%for campground in campgroundsList%}
-                <p><b>Full name:</b> {{ campground.get("name") or "No information  available"}}             </p>
-                <p><b>Description:</b> {{ campground.get("description") or "No information available"}}    </p>                
-                <p><b>Weather (plan accordingly!): </b> {{ campground.get("weatheroverview")  or "No information  available"}}             </p>   
-            
-                <p><b>Wheelchair Accessibility:</b>  {{ campground.get("accessibility").get("wheelchairaccess")  or "No information  available"}}    </p>
-                <p><b>Internet Connectivity:</b>  {{ campground.get("accessibility").get("internetconnectivity")  or "No information  available"}}    </p> 
-                <p><b>Cellphone Reception:</b>  {{ campground.get("accessibility").get("cellphonereception")  or "No information  available"}}    </p>  
+        <h3><i><u>Campground Information</u></i></h3>  
+        {%for campground in campgroundsList%}
+            <p><b>Full name:</b> {{ campground.get("name") or "No information  available"}}             </p>
+            <p><b>Description:</b> {{ campground.get("description") or "No information available"}}    </p>                
+            <p><b>Weather (plan accordingly!): </b> {{ campground.get("weatheroverview")  or "No information  available"}}             </p>   
+        
+            <p><b>Wheelchair Accessibility:</b>  {{ campground.get("accessibility").get("wheelchairaccess")  or "No information  available"}}    </p>
+            <p><b>Internet Connectivity:</b>  {{ campground.get("accessibility").get("internetconnectivity")  or "No information  available"}}    </p> 
+            <p><b>Cellphone Reception:</b>  {{ campground.get("accessibility").get("cellphonereception")  or "No information  available"}}    </p>  
 
-                <p><b>Bathroom Accessibility:</b>  {{ campground.get("amenities").get("toilets")[0]  or "No information  available"}}    </p>
+            <p><b>Bathroom Accessibility:</b>  {{ campground.get("amenities").get("toilets")[0]  or "No information  available"}}    </p>
 
-                <p><b>Additional Information:</b>  {{ campground.get("accessibility").get("additionalinfo")  or "No information  available"}}    </p>  
+            <p><b>Additional Information:</b>  {{ campground.get("accessibility").get("additionalinfo")  or "No information  available"}}    </p>  
 
-                <p><a href={{campground.get("regulationsurl") or "javascript:;" }}><u><b>Regulations:</b></u></a> {{ campground.get("regulationsoverview") or "No information  available"}}    </p>
-                <p><a href={{campground.get("directionsurl") or "javascript:;" }}><u><b>Directions:</b></u></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
+            <p><a href={{campground.get("regulationsurl") or "javascript:;" }}><u><b>Regulations:</b></u></a> {{ campground.get("regulationsoverview") or "No information  available"}}    </p>
+            <p><a href={{campground.get("directionsurl") or "javascript:;" }}><u><b>Directions:</b></u></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
+            <br>            
+        {% endfor %}
+        </div>
+
+    <A NAME="alerts"></A>
+    <div class="container-fluid">
+        <h3><i><u>Alerts</u></i></h3>  
+        {%for alert in alertsList%}
+            <p><b> <a href= {{ alert.get("url") or "javascript:;" }}>{{ alert.get("title")}}:</a></b> {{ alert.get("description") or "No information available"}}  </p>
+            <br>            
+        {% endfor %}
+    </div>
+
+    <A NAME="articles"></A>
+    <div class="container-fluid">               
+        {% if random %}
+            <h3><i><u>Top 5 Articles</u></i></h3>  
+            {%for i in random%}
+                <p> <a href= {{ articlesList[i].get("url") or "javascript:;" }}>{{ articlesList[i].get("title")}}:</a> {{ articlesList[i].get("listingdescription") or "No information available"}}  </p>
                 <br>            
             {% endfor %}
-        </div>
+        {% else %}
+            <h3><i><u>Top {{articlesList_length}} Articles</u></i></h3>
+            {%for article in articlesList%}
+                <p><b> <a href= {{ article.get("url") or "javascript:;" }}>{{ article.get("title")}}:</a></b> {{ article.get("listingdescription") or "No information available"}}  </p>
+                <br>            
+            {% endfor %}
+        {% endif %}
+    </div>
 
 
 {% endblock %}

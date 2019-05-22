@@ -63,7 +63,7 @@ def listParksAndStates():
     
     return parks, states
 
-#infoType can equal "visitorCenters", "campgrounds", "alerts", "events", "news"
+#infoType can equal "visitorCenters", "campgrounds", "alerts", "articles", "events", "news"
 def getInfo(parkName, infoType):
     endpoint = requests.get(f"{url}/{infoType}?q={parkName}&api_key={api}")
     data = endpoint.json()  
@@ -71,7 +71,7 @@ def getInfo(parkName, infoType):
 
         
 
-#print(visitorCenters("Zion"))
+print(getInfo("Zion","articles")[0])
 #print(visitorCenters("Zion")[0]["name"])
 
 #print(listParksByState("ME"))

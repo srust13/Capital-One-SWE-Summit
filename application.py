@@ -2,6 +2,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from helpers import listParksAndStates, getInfo
+from random import randint
 
 app = Flask(__name__)
 
@@ -39,8 +40,20 @@ def search():
         #If the user selected a park from the drop down, render park.html, else render state.html
         if park:     
             visitorCentersList=getInfo(park, "visitorCenters") 
-            campgroundsList=getInfo(park, "campgrounds")              
-            return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList)
+            campgroundsList=getInfo(park, "campgrounds")
+            alertsList=getInfo(park, "alerts")
+
+            #Need to print out top 5 articles if there are more than 5 articles 
+            articlesList=getInfo(park, "articles") 
+            articlesList_length=len(articlesList)
+            topArticles=5
+            if articlesList_length >= topArticles:
+                #Make sure random number is unique so same article doesn't show up
+                random=[]
+                random=[randint(0,articlesList_length-1) for i in range(0,topArticles) if randint(0,articlesList_length-1) not in random]
+
+            return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList, alertsList=alertsList, 
+            articlesList=articlesList,articlesList_length=articlesList_length, random=random )
         else:
             return render_template("state.html",state=state)
 
