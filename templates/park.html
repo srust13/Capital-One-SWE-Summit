@@ -69,7 +69,7 @@
                 <br>            
             {% endfor %}
         {% else %}
-            <h3><i><u>Top {{articlesList_length}} Articles</u></i></h3>
+            <h3><i><u>Top {{articlesList|length}} Articles</u></i></h3>
             {%for article in articlesList%}
                 <p><b> <a href= {{ article.get("url") or "javascript:;" }}>{{ article.get("title")}}:</a></b> {{ article.get("listingdescription") or "No information available"}}  </p>
                 <br>            
@@ -82,11 +82,39 @@
         {% if randomEvents %}
             <h3><i><u>Top 5 Events</u></i></h3>  
             {%for i in randomEvents%}
-                <p> <a href= {{ eventsList[i].get("url") or "javascript:;" }}>{{ eventsList[i].get("title")}}:</a> {{ eventsList[i].get("listingdescription") or "No information available"}}  </p>
-                <br>            
+                <p> {{ eventsList[i].get("title")}} </p> 
+                
+                {% if eventsList[i].get("isFree")=="false"%}               
+                <p><b> Fee:</b> The event is not free; you should call the park</p>
+                {%else%}                
+                <p><b> Fee:</b> Free</p>
+                {%endif%}
+                
+                <p> Location:</b> {{ eventsList[i].get("Location")}} </p>
+                
+                {% if eventsList[i].get("isrecurring")=="false"%}               
+                    <p><b> One Time Event!</b></p>
+                {%else%}                
+                    <p><b>Repeating Event</b></p>
+                {%endif%}
+                <p><b>Days:</b> 
+                
+                {%for dayIdx in range(2,dates[i]|length)%}
+                    {% if dayIdx < dates[i]|length - 1 %}               
+                        Every {{dates[i][dayIdx]}}, </p>
+                    {%else%}                
+                        Every {{dates[i][dayIdx]}}</p>
+                    {%endif%}
+                {%endfor%}
+                    <p><b>Dates:</b> {{dates[i][0]}} to {{dates[i][1]}} </p>
+                <hr>
+
+
+
+
             {% endfor %}
         {% else %}
-            <h3><i><u>Top {{eventsList_length}} Events</u></i></h3>
+            <h3><i><u>Top {{eventsList|length}} Events</u></i></h3>
             {%for event in eventsList%}
                 <p><b> <a href= {{ event.get("url") or "javascript:;" }}>{{ event.get("title")}}:</a></b> {{ event.get("listingdescription") or "No information available"}}  </p>
                 <br>            
@@ -105,7 +133,7 @@
                 <br>            
             {% endfor %}
         {% else %}
-            <h3><i><u>Top {{newsList_length}} Top {{newsList_length}} News Releases</u></i></h3>
+            <h3><i><u>Top {{newsList|length}} News Releases</u></i></h3>
             {%for news in newsList%}
                 <p><b> <a href= {{ news.get("url") or "javascript:;" }}>{{ news.get("title")}}:</a></b> {{ news.get("abstract") or "No information available"}}  </p>
                 <br>            

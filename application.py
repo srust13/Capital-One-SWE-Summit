@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from helpers import listParksAndStates, getInfo, generateRandom
+from helpers import listParksAndStates, getInfo, generateRandom, parseRecurrence
 
 
 app = Flask(__name__)
@@ -45,28 +45,27 @@ def search():
 
             #Need to print out top 5 articles if there are more than 5 articles 
             articlesList=getInfo(park, "articles") 
-            articlesList_length=len(articlesList)            
             topArticles=5
-            randomArticles=generateRandom(articlesList_length, topArticles)
+            randomArticles=generateRandom(len(articlesList), topArticles)
 
-            #Need to print out top 5 events if there are more than 5 events
+            #Need to print out top 4 events if there are more than 4 events
             eventsList=getInfo(park, "events") 
-            eventsList_length=len(eventsList)            
-            topEvents=3
-            randomNews=generateRandom(eventsList_length, topEvents)
+            topEvents=4
+            dates=[parseRecurrence(event.get("recurrencerule","")) for event in eventsList]
+            randomEvents=generateRandom(len(eventsList), topEvents)
+
 
             #Need to print out top 5 news releases if there are more than 5 news releases
-            newsList=getInfo(park, "newsreleases") 
-            newsList_length=len(newsList)            
+            newsList=getInfo(park, "newsreleases")
             topNews=5
-            randomNews=generateRandom(newsList_length, topNews)
+            randomNews=generateRandom(len(newsList), topNews)
 
             
             
 
             return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList, alertsList=alertsList, 
-            articlesList=articlesList,articlesList_length=articlesList_length, randomArticles=randomArticles,
-            newsList=newsList, newsList_length=newsList_length, randomNews=randomNews )
+            articlesList=articlesList, randomArticles=randomArticles, eventsList=eventsList, randomEvents=randomEvents, dates=dates,
+            newsList=newsList, randomNews=randomNews )
         else:
             return render_template("state.html",state=state)
 

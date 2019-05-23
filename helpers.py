@@ -81,6 +81,47 @@ def generateRandom(length, count):
     return random
 
 
+def parseRecurrence(rec):
+    rrule=[]
+    if rec=="":
+        return  rrule   
+
+    months={"01":"January", "02": "February", "03": "March", "04": "April","05":"May","06": "June", 
+    "07":"July","08":"August","09":"September","10":"October","11":"November", "12":"December"}
+    #Get the start and end date of the event. year of length 4, month of length 2, and day of length 2
+    for i in range(0,2):
+        baseIdx = rec.index("=")
+        year=rec[baseIdx + 1 : baseIdx + 5]
+        month=months[rec[baseIdx + 5 : baseIdx + 7]]
+        day=rec[baseIdx + 7 : baseIdx + 9]
+        rrule.append(month+" "+day+", "+year)
+        rec=rec[baseIdx + 9::]
+    
+    days={"MO":"Monday", "TU":"Tuesday", "WE":"Wednesday", "TH":"Thursday", "FR":"Friday", "SA":"Saturday", "SU":"Sunday"}
+    #If events recurs every single day, just append "day" ("every" will be the in html regardless)
+    try:
+        rec.index("FREQ=DAILY")
+        
+        rrule.append("day")
+    except:
+        #Gets the list of recurring days. "byday=" has length 6
+        rec=rec[rec.index("BYDAY")+6::]
+        rec=rec[0:rec.index(";")]    
+        daysList=rec.split(",")
+        for day in daysList:
+            rrule.append(days[str(day)])    
+    return rrule
+'''
+checker=[]
+eventsList=getInfo("Zion", "events")
+print(len(eventsList))
+for event in eventsList:
+    rec=event.get("recurrencerule","")
+    print("input string", rec)
+    print("appended", parseRecurrence(rec))
+    checker.append(parseRecurrence(rec))
+print(len(checker))
+'''
 #print(getInfo("Zion","articles")[0])
 #print(visitorCenters("Zion")[0]["name"])
 
