@@ -1,8 +1,8 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from helpers import listParksAndStates, getInfo
-from random import randint
+from helpers import listParksAndStates, getInfo, generateRandom
+
 
 app = Flask(__name__)
 
@@ -45,15 +45,28 @@ def search():
 
             #Need to print out top 5 articles if there are more than 5 articles 
             articlesList=getInfo(park, "articles") 
-            articlesList_length=len(articlesList)
+            articlesList_length=len(articlesList)            
             topArticles=5
-            if articlesList_length >= topArticles:
-                #Make sure random number is unique so same article doesn't show up
-                random=[]
-                random=[randint(0,articlesList_length-1) for i in range(0,topArticles) if randint(0,articlesList_length-1) not in random]
+            randomArticles=generateRandom(articlesList_length, topArticles)
+
+            #Need to print out top 5 events if there are more than 5 events
+            eventsList=getInfo(park, "events") 
+            eventsList_length=len(eventsList)            
+            topEvents=3
+            randomNews=generateRandom(eventsList_length, topEvents)
+
+            #Need to print out top 5 news releases if there are more than 5 news releases
+            newsList=getInfo(park, "newsreleases") 
+            newsList_length=len(newsList)            
+            topNews=5
+            randomNews=generateRandom(newsList_length, topNews)
+
+            
+            
 
             return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList, alertsList=alertsList, 
-            articlesList=articlesList,articlesList_length=articlesList_length, random=random )
+            articlesList=articlesList,articlesList_length=articlesList_length, randomArticles=randomArticles,
+            newsList=newsList, newsList_length=newsList_length, randomNews=randomNews )
         else:
             return render_template("state.html",state=state)
 

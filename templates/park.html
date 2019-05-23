@@ -46,7 +46,7 @@
             <p><b>Additional Information:</b>  {{ campground.get("accessibility").get("additionalinfo")  or "No information  available"}}    </p>  
 
             <p><a href={{campground.get("regulationsurl") or "javascript:;" }}><u><b>Regulations:</b></u></a> {{ campground.get("regulationsoverview") or "No information  available"}}    </p>
-            <p><a href={{campground.get("directionsurl") or "javascript:;" }}><u><b>Directions:</b></u></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
+            <p><a href={{campground.get("directionsUrl") or "javascript:;" }}><u><b>Directions:</b></u></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
             <br>            
         {% endfor %}
         </div>
@@ -62,9 +62,9 @@
 
     <A NAME="articles"></A>
     <div class="container-fluid">               
-        {% if random %}
+        {% if randomArticles %}
             <h3><i><u>Top 5 Articles</u></i></h3>  
-            {%for i in random%}
+            {%for i in randomArticles%}
                 <p> <a href= {{ articlesList[i].get("url") or "javascript:;" }}>{{ articlesList[i].get("title")}}:</a> {{ articlesList[i].get("listingdescription") or "No information available"}}  </p>
                 <br>            
             {% endfor %}
@@ -72,6 +72,42 @@
             <h3><i><u>Top {{articlesList_length}} Articles</u></i></h3>
             {%for article in articlesList%}
                 <p><b> <a href= {{ article.get("url") or "javascript:;" }}>{{ article.get("title")}}:</a></b> {{ article.get("listingdescription") or "No information available"}}  </p>
+                <br>            
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <A NAME="events"></A>
+    <div class="container-fluid">               
+        {% if randomEvents %}
+            <h3><i><u>Top 5 Events</u></i></h3>  
+            {%for i in randomEvents%}
+                <p> <a href= {{ eventsList[i].get("url") or "javascript:;" }}>{{ eventsList[i].get("title")}}:</a> {{ eventsList[i].get("listingdescription") or "No information available"}}  </p>
+                <br>            
+            {% endfor %}
+        {% else %}
+            <h3><i><u>Top {{eventsList_length}} Events</u></i></h3>
+            {%for event in eventsList%}
+                <p><b> <a href= {{ event.get("url") or "javascript:;" }}>{{ event.get("title")}}:</a></b> {{ event.get("listingdescription") or "No information available"}}  </p>
+                <br>            
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <A NAME="news"></A>
+    <div class="container-fluid">               
+        {% if randomNews %}
+            <h3><i><u>Top 5 News Releases</u></i></h3>  
+            {%for i in randomNews%}
+                <p> <a href= {{ newsList[i].get("url") or "javascript:;" }}>{{ newsList[i].get("title")}}:</a> {{ newsList[i].get("abstract") or "No information available"}}  </p>
+                <p>Released: {{ newsList[i].get("releasedate").split(" ")[0] }} </p>
+                <br>            
+            {% endfor %}
+        {% else %}
+            <h3><i><u>Top {{newsList_length}} Top {{newsList_length}} News Releases</u></i></h3>
+            {%for news in newsList%}
+                <p><b> <a href= {{ news.get("url") or "javascript:;" }}>{{ news.get("title")}}:</a></b> {{ news.get("abstract") or "No information available"}}  </p>
                 <br>            
             {% endfor %}
         {% endif %}

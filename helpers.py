@@ -1,5 +1,5 @@
 import requests, json
-import urllib.request, json
+from random import randint
 
 url="https://developer.nps.gov/api/v1"
 api= "nMeJTZeHbgdfQeRtllNPQImS4eP37B83Iu7Mt1Fe"
@@ -69,9 +69,19 @@ def getInfo(parkName, infoType):
     data = endpoint.json()  
     return data["data"]
 
-        
 
-print(getInfo("Zion","articles")[0])
+def generateRandom(length, count):
+    if length >= count:
+        #Make sure random number is unique so same item from API doesn't show up
+        random=[]
+        while len(random)<count:
+            x= randint(0,length-1)
+            if x not in random:
+                random.append(x)
+    return random
+
+
+#print(getInfo("Zion","articles")[0])
 #print(visitorCenters("Zion")[0]["name"])
 
 #print(listParksByState("ME"))
