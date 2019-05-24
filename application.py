@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from helpers import listParksAndStates, getInfo, generateRandom, parseRecurrence
+from helpers import listParksAndStates, getInfo, generateRandom, parseRecurrence, timeNeeded
 
 
 app = Flask(__name__)
@@ -45,27 +45,28 @@ def search():
 
             #Need to print out top 5 articles if there are more than 5 articles 
             articlesList=getInfo(park, "articles") 
-            topArticles=5
-            randomArticles=generateRandom(len(articlesList), topArticles)
+            
 
             #Need to print out top 4 events if there are more than 4 events
             eventsList=getInfo(park, "events") 
             topEvents=4
-            dates=[parseRecurrence(event.get("recurrencerule","")) for event in eventsList]
-            randomEvents=generateRandom(len(eventsList), topEvents)
+            dates=[]
+            duration=[]
+            for event in eventsList:
+                dates.append(parseRecurrence(event.get("recurrencerule","")))
+                eventTime= event.get("times")[0]
+                duration.append(timeNeeded(eventTime.get("timestart"), eventTime.get("timeend")))
+            
 
 
             #Need to print out top 5 news releases if there are more than 5 news releases
             newsList=getInfo(park, "newsreleases")
-            topNews=5
-            randomNews=generateRandom(len(newsList), topNews)
 
             
             
 
             return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList, alertsList=alertsList, 
-            articlesList=articlesList, randomArticles=randomArticles, eventsList=eventsList, randomEvents=randomEvents, dates=dates,
-            newsList=newsList, randomNews=randomNews )
+            articlesList=articlesList, eventsList=eventsList, dates=dates, duration=duration, newsList=newsList)
         else:
             return render_template("state.html",state=state)
 

@@ -61,84 +61,68 @@
     </div>
 
     <A NAME="articles"></A>
-    <div class="container-fluid">               
-        {% if randomArticles %}
-            <h3><i><u>Top 5 Articles</u></i></h3>  
-            {%for i in randomArticles%}
-                <p> <a href= {{ articlesList[i].get("url") or "javascript:;" }}>{{ articlesList[i].get("title")}}:</a> {{ articlesList[i].get("listingdescription") or "No information available"}}  </p>
-                <br>            
-            {% endfor %}
-        {% else %}
-            <h3><i><u>Top {{articlesList|length}} Articles</u></i></h3>
-            {%for article in articlesList%}
-                <p><b> <a href= {{ article.get("url") or "javascript:;" }}>{{ article.get("title")}}:</a></b> {{ article.get("listingdescription") or "No information available"}}  </p>
-                <br>            
-            {% endfor %}
-        {% endif %}
+    <div class="container-fluid">   
+        <h3><i><u>Top {{articlesList|length}} Articles</u></i></h3>
+        {%for article in articlesList%}
+            <p><b> <a href= {{ article.get("url") or "javascript:;" }}>{{ article.get("title")}}:</a></b> {{ article.get("listingdescription") or "No information available"}}  </p>
+            <br>            
+        {% endfor %}
     </div>
 
     <A NAME="events"></A>
     <div class="container-fluid">               
-        {% if randomEvents %}
-            <h3><i><u>Top 5 Events</u></i></h3>  
-            {%for i in randomEvents%}
-                <p> {{ eventsList[i].get("title")}} </p> 
-                
-                {% if eventsList[i].get("isFree")=="false"%}               
-                <p><b> Fee:</b> The event is not free; you should call the park</p>
+    
+        <h3><i><u>Top {{eventsList|length}}  Events</u></i></h3>  
+        {%for event in eventsList%}
+            <p> {{ event.get("title")}} </p> 
+            
+            {% if event.get("isFree")=="false"%}               
+            <p><b> Fee:</b> The event is not free; you should call the park</p>
+            {%else%}                
+            <p><b> Fee:</b> Free</p>
+            {%endif%}
+            
+            <p> Location:</b> {{ event.get("Location")}} </p>
+            
+            {% if event.get("isrecurring")=="false"%}               
+                <p><b> One Time Event!</b></p>
+            {%else%}                
+                <p><b>Repeating Event</b></p>
+            {%endif%}
+            <p><b>Days:</b> 
+            
+            {%for dayIdx in range(2,dates[loop.index0]|length)%}
+                {% if dayIdx < dates[loop.index0]|length - 1 %}               
+                    Every {{dates[loop.index0][dayIdx]}}, </p>
                 {%else%}                
-                <p><b> Fee:</b> Free</p>
+                    Every {{dates[loop.index0][dayIdx]}}</p>
                 {%endif%}
-                
-                <p> Location:</b> {{ eventsList[i].get("Location")}} </p>
-                
-                {% if eventsList[i].get("isrecurring")=="false"%}               
-                    <p><b> One Time Event!</b></p>
+            {%endfor%}
+                <p><b>Dates:</b> {{dates[loop.index0][0]}} to {{dates[loop.index0][1]}} </p>
+
+            <p><b>Times: </b></p>
+            {%for timeIdx in range(0,event.get("times","")|length)%}
+                {% if timeIdx < event.get("times")|length - 1 %}               
+                    {{event.get("times")[timeIdx].get("timestart")}}, </p>
                 {%else%}                
-                    <p><b>Repeating Event</b></p>
+                    {{event.get("times")[timeIdx].get("timestart")}}</p>
                 {%endif%}
-                <p><b>Days:</b> 
-                
-                {%for dayIdx in range(2,dates[i]|length)%}
-                    {% if dayIdx < dates[i]|length - 1 %}               
-                        Every {{dates[i][dayIdx]}}, </p>
-                    {%else%}                
-                        Every {{dates[i][dayIdx]}}</p>
-                    {%endif%}
-                {%endfor%}
-                    <p><b>Dates:</b> {{dates[i][0]}} to {{dates[i][1]}} </p>
+            {%endfor%}
+
+            <p><b>Duration: {{ duration[i]}}</b></p>
                 <hr>
-
-
-
-
-            {% endfor %}
-        {% else %}
-            <h3><i><u>Top {{eventsList|length}} Events</u></i></h3>
-            {%for event in eventsList%}
-                <p><b> <a href= {{ event.get("url") or "javascript:;" }}>{{ event.get("title")}}:</a></b> {{ event.get("listingdescription") or "No information available"}}  </p>
-                <br>            
-            {% endfor %}
-        {% endif %}
+        {% endfor %}
     </div>
 
 
     <A NAME="news"></A>
-    <div class="container-fluid">               
-        {% if randomNews %}
-            <h3><i><u>Top 5 News Releases</u></i></h3>  
-            {%for i in randomNews%}
-                <p> <a href= {{ newsList[i].get("url") or "javascript:;" }}>{{ newsList[i].get("title")}}:</a> {{ newsList[i].get("abstract") or "No information available"}}  </p>
-                <p>Released: {{ newsList[i].get("releasedate").split(" ")[0] }} </p>
-                <br>            
-            {% endfor %}
-        {% else %}
-            <h3><i><u>Top {{newsList|length}} News Releases</u></i></h3>
-            {%for news in newsList%}
-                <p><b> <a href= {{ news.get("url") or "javascript:;" }}>{{ news.get("title")}}:</a></b> {{ news.get("abstract") or "No information available"}}  </p>
-                <br>            
-            {% endfor %}
-        {% endif %}
+    <div class="container-fluid">  
+        <h3><i><u>Top {{newsList|length}} News Releases</u></i></h3>
+        {%for news in newsList%}
+            <p><b> <a href= {{ news.get("url") or "javascript:;" }}>{{ news.get("title")}}:</a></b> {{ news.get("abstract") or "No information available"}}  </p>
+            <p>Released: {{ news.get("releasedate").split(" ")[0] }} </p>
+            <br>            
+        {% endfor %}
     </div>
 
 

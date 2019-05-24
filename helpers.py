@@ -1,5 +1,6 @@
 import requests, json
 from random import randint
+from datetime import datetime
 
 url="https://developer.nps.gov/api/v1"
 api= "nMeJTZeHbgdfQeRtllNPQImS4eP37B83Iu7Mt1Fe"
@@ -78,6 +79,8 @@ def generateRandom(length, count):
             x= randint(0,length-1)
             if x not in random:
                 random.append(x)
+    #Make sure random is in order so items are in chronological order from consuming API
+    random.sort()
     return random
 
 
@@ -111,16 +114,40 @@ def parseRecurrence(rec):
         for day in daysList:
             rrule.append(days[str(day)])    
     return rrule
+
+def timeNeeded(startTime,endTime):
+    tdelta="Not available"
+    if startTime=="" or endTime=="":
+        return tdelta
+    startTime=startTime.replace(" ", ":")
+    endTime=endTime.replace(" ", ":")
+    FMT = '%I:%M:%p'
+    tdelta = datetime.strptime(endTime, FMT) - datetime.strptime(startTime, FMT) 
+    seconds = tdelta.total_seconds()
+    hours = int(seconds // 3600)    
+    minutes = int((seconds % 3600) // 60)
+    if hours>0 and minutes>0:
+        return str(hours)+" hours and "+str(minutes)+ " minutes" 
+    elif hours==0 and minutes>0:
+        return str(minutes)+ " minutes" 
+    else:
+        return str(hours)+ " hours"
+
+
+
+
+
 '''
 checker=[]
 eventsList=getInfo("Zion", "events")
-print(len(eventsList))
 for event in eventsList:
-    rec=event.get("recurrencerule","")
-    print("input string", rec)
-    print("appended", parseRecurrence(rec))
-    checker.append(parseRecurrence(rec))
-print(len(checker))
+    eventTime= event.get("times")[0]
+    print(event.get("title"))
+    print(eventTime)
+    checker.append(timeNeeded(eventTime.get("timestart"), eventTime.get("timeend")))
+    print(timeNeeded(eventTime.get("timestart"), eventTime.get("timeend")))
+    print()
+    '''
 '''
 #print(getInfo("Zion","articles")[0])
 #print(visitorCenters("Zion")[0]["name"])
@@ -129,3 +156,4 @@ print(len(checker))
 #listParksAndStates()
 #print(listParksAndStates()[0])
 #print(listParksAndStates()[1])
+'''
