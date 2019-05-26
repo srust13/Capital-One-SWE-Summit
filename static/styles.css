@@ -58,11 +58,27 @@ nav .navbar-brand .green
   cursor: pointer;
  }
 
- .container-fluid{
-  text-align: left;
- }
+
+ 
+/* Park html page CSS */
+
 
  .space { 
   margin-top: 300px; 
 }
 
+h3{
+    text-align: left;
+    margin-left: 15px;
+}
+
+.list-group{
+    width: 95%;
+    margin: auto;
+    text-align: left;
+}
+
+
+p{
+    text-align: left;
+}

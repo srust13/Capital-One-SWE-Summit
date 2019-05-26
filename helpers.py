@@ -71,19 +71,6 @@ def getInfo(parkName, infoType):
     return data["data"]
 
 
-def generateRandom(length, count):
-    if length >= count:
-        #Make sure random number is unique so same item from API doesn't show up
-        random=[]
-        while len(random)<count:
-            x= randint(0,length-1)
-            if x not in random:
-                random.append(x)
-    #Make sure random is in order so items are in chronological order from consuming API
-    random.sort()
-    return random
-
-
 def parseRecurrence(rec):
     rrule=[]
     if rec=="":
@@ -111,8 +98,12 @@ def parseRecurrence(rec):
         rec=rec[rec.index("BYDAY")+6::]
         rec=rec[0:rec.index(";")]    
         daysList=rec.split(",")
-        for day in daysList:
-            rrule.append(days[str(day)])    
+        #Append the day with a "," if it is not the last day in the list, otherwise just append the day to the list
+        for i, day in enumerate(daysList):
+            if i<len(daysList)-1:
+                rrule.append(days[str(day)]+", ")    
+            else:
+                rrule.append(days[str(day)])
     return rrule
 
 def timeNeeded(startTime,endTime):
@@ -137,17 +128,14 @@ def timeNeeded(startTime,endTime):
 
 
 
-'''
+
 checker=[]
-eventsList=getInfo("Zion", "events")
-for event in eventsList:
-    eventTime= event.get("times")[0]
-    print(event.get("title"))
-    print(eventTime)
-    checker.append(timeNeeded(eventTime.get("timestart"), eventTime.get("timeend")))
-    print(timeNeeded(eventTime.get("timestart"), eventTime.get("timeend")))
-    print()
-    '''
+#eventsList=getInfo("yosemite", "people")    
+
+#for event in eventsList:
+#    checker.append(event.get("listingimage").get("url"))
+#print(eventsList)
+
 '''
 #print(getInfo("Zion","articles")[0])
 #print(visitorCenters("Zion")[0]["name"])

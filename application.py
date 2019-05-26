@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from helpers import listParksAndStates, getInfo, generateRandom, parseRecurrence, timeNeeded
+from helpers import listParksAndStates, getInfo,  parseRecurrence, timeNeeded
 
 
 app = Flask(__name__)
@@ -33,21 +33,18 @@ def index():
 def search():
     parks=listParksAndStates()[0]
     states=listParksAndStates()[1]
-    if request.method=="POST":
-        park=request.form.get("park")
+    if request.method=="POST" or request.args.get("park"):
+        park=request.form.get("park") or request.args.get("park")
         state=request.form.get("state") 
 
         #If the user selected a park from the drop down, render park.html, else render state.html
         if park:     
+            aboutParksList=getInfo(park,"parks")
             visitorCentersList=getInfo(park, "visitorCenters") 
             campgroundsList=getInfo(park, "campgrounds")
             alertsList=getInfo(park, "alerts")
+            articlesList=getInfo(park, "articles")             
 
-            #Need to print out top 5 articles if there are more than 5 articles 
-            articlesList=getInfo(park, "articles") 
-            
-
-            #Need to print out top 4 events if there are more than 4 events
             eventsList=getInfo(park, "events") 
             topEvents=4
             dates=[]
@@ -57,16 +54,14 @@ def search():
                 eventTime= event.get("times")[0]
                 duration.append(timeNeeded(eventTime.get("timestart"), eventTime.get("timeend")))
             
-
-
-            #Need to print out top 5 news releases if there are more than 5 news releases
             newsList=getInfo(park, "newsreleases")
+            lessonsList=getInfo(park, "lessonplans")
+            peopleList=getInfo(park, "people")
+            placesList=getInfo(park, "places")
 
-            
-            
-
-            return render_template("park.html",park=park, visitorCentersList=visitorCentersList, campgroundsList=campgroundsList, alertsList=alertsList, 
-            articlesList=articlesList, eventsList=eventsList, dates=dates, duration=duration, newsList=newsList)
+            return render_template("park.html",park=park, aboutParksList=aboutParksList, visitorCentersList=visitorCentersList, 
+            campgroundsList=campgroundsList, alertsList=alertsList, articlesList=articlesList, eventsList=eventsList, dates=dates, 
+            duration=duration, newsList=newsList, lessonsList=lessonsList, peopleList=peopleList, placesList=placesList)
         else:
             return render_template("state.html",state=state)
 
