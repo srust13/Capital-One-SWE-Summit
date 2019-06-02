@@ -19,58 +19,117 @@ nav .navbar-brand .green
     color: #2e944b;
 }
 
-.cont
-{
-    padding-top: 50px; 
 
-    /* override Bootstrap's 100% width for form controls */
-    width: auto;
+.layoutBGIMG{
+    background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url("../static/main.jpg");
+    background: url("../static/main.jpg");
+    background-position: cover;
+    background-size: cover;
+    
+    
 }
 
+.whiteBGIMG{
+    background-color: #f7f7f7;
+}
+
+
 .cont
 {
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;    
     /* center contents */
     text-align: center;
 }
 
+
+.space
+{
+    padding-top: 8.5vh; 
+}
+
+
+#page-container {  
+    position: relative; 
+    min-height: 100vh;
+    
+}
+
+#content-wrap {  
+    padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {  
+    position: absolute;  
+    bottom: 0;  
+    width: 100%;  
+    height: 2.5rem;            /* Footer height */
+}
+
+
+
 /* Search tab CSS */
 #park{
-  width:30%;  
-  margin: 20px 680px;;
+  width:50vw;  
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
  }
 
  #park option{
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
+  align-content: center;
  }
 
  #state{
-  width:30%;  
-  margin: 20px 680px;;
+  width:50vw;  
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
  }
 
  #state option{
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
+
  }
 
  option:hover{
   cursor: pointer;
  }
+ 
 
 
  
 /* Park html page CSS */
+    
 
+.carousel-item img {
+    min-height: 62vh;
+    height: 62vh;
+    max-height: 62vh;
+    align-self: center;
+    display: block;
+  }
 
- .space { 
-  margin-top: 300px; 
+hr.seperate {
+    border-top: 1px dashed black;
+    width: 90vw;
+  }
+
+hr.eventhr{
+    border-color: darkgray;
 }
+
 
 h3{
     text-align: left;
     margin-left: 15px;
 }
+
 
 .list-group{
     width: 95%;
@@ -79,6 +138,139 @@ h3{
 }
 
 
+.list-group-item.list-group-item-action.flex-column.align-items-start{
+    border-color: rgb(56,56,56);
+    background-color: #f7f7f7;
+}
+
+
 p{
     text-align: left;
 }
+
+.tab{
+    margin-left: 1.5em;
+}
+
+.form-control.form-control-lg{
+    width: 80vw;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+.btn-primary{
+    width:25vw;
+}
+
+#map {
+    height: 350px;
+    position: relative;
+    width: 100%;
+  }
+
+#map-canvas {
+    height: 70vh;
+    width: 95%;
+    margin: 0 auto 0 auto;
+    padding: 0px;
+    
+}
+
+#routebtn{
+    font-size: 20px;
+}
+
+/* Search html page CSS */
+
+
+
+.search-container {
+    background-color: hsla(202, 95%, 15%, 0.6);
+    padding: 50px 30px;
+    min-width: 600px;
+    width: 50%;
+    max-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    justify-items: center;
+    align-content: center;
+
+}
+
+.keyword{
+    min-width: 70vw;
+    max-width: 70vw;
+}
+
+.form-control.form-control-lg{
+    width: 100%;
+}
+
+.search-title {
+    color: white;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    font-weight: normal;
+}
+
+.largefont{
+    font-size: 3.5em;
+    margin-bottom: 15vh;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.select2-selection__rendered {
+    line-height: 36px !important;
+    font-size: 1.1em;
+}
+.select2-container .select2-selection--single {
+    height: 41px !important;
+}
+.select2-selection__arrow {
+    height: 40px !important;
+}
+
+.select2-search input {
+    background-color: hsla(201, 100%, 91%, 0.3);
+}
+
+.select2-results { 
+    background-color: hsla(201, 100%, 91%, 0.3);    
+}
+
+.input-group input:focus {
+    border: 1px solid hsl(201, 100%, 50%)
+}
+
+.search-button {
+    padding: 10px 30px;
+    width: 100%;
+    border-radius: 5px; 
+    background-color: hsla(201, 100%, 50%, 0.8);
+    border: 1px solid hsl(201, 100%, 50%);
+    outline: none;
+    font-size: 1.5em;
+    color: white;
+    font-weight: lighter;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: hsla(201, 100%, 50%, 0.3)
+}
+
+.search-button:focus {
+    background-color: hsla(201, 100%, 50%, 0.5)
+}
+

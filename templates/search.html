@@ -1,33 +1,48 @@
-{% extends "layout.html" %}
+{% extends "layoutBGIMG.html" %}
 
 {% block title %}
     Search
 {% endblock %}
 
 {% block main %}
-<h1>Search for a park by name</h1>
-<form action="/search" method="post">  
-  <select size="7" class="form-control" id="park" name="park">
-  {% for park in parks %}
-  <option value="{{park}}">{{park}}</option>
-  {% endfor %}
-  </select>
-  <button class="btn btn-primary" type="submit">Explore!</button>
-  <button class="btn btn-primary" type="submit">Explore something else!</button>
-</form>
+<div class="space"></div>
 
+<div class="search-container">
+    <h3 class="search-title">Search for a park by name</h3>
+    <form action="/search" method="post">  
+      <div class="input-group">
+        <select id="e1" class="park" name="park">
+        {% for park in parks %}
+        <option value="{{park}}">{{park}}</option>
+        {% endfor %}
+        </select>
+      </div>    
+      <button class="search-button" type="submit">Explore</button>
+    </form>
+  </div>
 <br><br><br>
 
-<h1>Search for a park by state</h1>
-<form action="/search" method="post">  
-  <select size="7" class="form-control" id="state" name="state">
-  {% for state in states %}
-  <option value="{{state}}">{{state}}</option>
-  {% endfor %}
-  </select>
-  <button class="btn btn-primary" type="submit">Explore!</button>
+<div class="search-container">
+  <h3 class="search-title">Search for a park by state</h3>
+  <form action="/search" method="post">  
+    <div class="input-group">
+      <select id="e2" class="state" name="state">
+      {% for state in states %}
+      <option value="{{state}}">{{state}}</option>
+      {% endfor %}
+      </select>
+    </div>    
+    <button class="search-button" type="submit">Explore</button>
+  </form>
+</div>
+<br>
 
-</form>
+
+<script>
+  $(document).ready(function() { $("#e1").select2(); });
+  $(document).ready(function() { $("#e2").select2(); });
+</script>
+
 
 {% endblock %}
 

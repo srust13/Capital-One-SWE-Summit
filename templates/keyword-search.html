@@ -1,0 +1,21 @@
+{% extends "layoutBGIMG.html" %}
+
+{% block title %}
+    Keyword Search
+{% endblock %}
+
+{% block main %}
+<div class="space"></div>
+<div class="keyword search-container">
+    <h3 class="search-title largefont">Experience All That Nature Has to Offer</h3>
+    <form action="/keyword-search" method="post">  
+        <div class="input-group">
+            <input type="text" name="searchQuery" id="searchQuery" class="form-control form-control-lg" autocomplete="off" autofocus class="form-control" placeholder="Search..">
+        </div>    
+      <br><br>
+      <button class="search-button" type="submit">Explore</button>
+    </form>
+</div>
+
+{% endblock %}
+

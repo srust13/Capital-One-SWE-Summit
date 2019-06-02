@@ -1,16 +1,17 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Explore 
+    Search
 {% endblock %}
 
 {% block main %}
-    <br><h1><b>Parks in {{fullStateName}}</b></h1>
+    <br><h1>Search results for: "{{query}}"</h1> 
+    <br>
     
     
     <div class="list-group">
         <!-- If the returned JSON is empty, display "No information available". Otherwise display relevent info -->
-        {%if stateParksList|length == 0%} 
+        {%if aboutParksList|length == 0%} 
         <div class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">No information available</h5>
@@ -19,7 +20,7 @@
         <br>
         {%endif%}
 
-        {% for parkItem in stateParksList %}        
+        {% for parkItem in aboutParksList %}        
         
             <a href={{parksURL.get(parkItem.get("parkCode"))}} target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                 <img src={{parkPicsURL.get(parkItem.get("parkCode")) or "../static/default.jpg"}} style="width:150px;height:150px">
@@ -29,16 +30,18 @@
                 </div>
                 
                 <p class="mb-1">{{ parkItem.get("description") or "No information available"}} </p><br>
+                
                 <p class="mb-1"><b>Entrance Passes - </b>
                     {%if parkItem.get("entrancePasses","")%}
                         {%for pass in parkItem.get("entrancePasses","")%}
                             <p class="mb-1 tab"><i>{{ pass.get("title") or ""}}</i> </p>
                             <p class="mb-1 tab">{{ pass.get("description") or ""}} </p>
-                            <p class="mb-1 tab"><b>Fee - </b>{{ pass.get("cost")|currencyFormat or "No information available"}} </p><br>
+                            <p class="mb-1 tab"><b>Fee - </b>{{pass.get("cost")|currencyFormat or "No information available"}} </p><br>
                         {%endfor%}
                     {%else%}
                         No information available</p>
                     {%endif%}
+
                 <p class="mb-1"><b>Weather -</b> {{ parkItem.get("weatherInfo") or "No information available"}} </p>
                 <p class="mb-1"><b>Directions -</b> {{ parkItem.get("directionsInfo") or "No information available"}} </p>
                 <p class="mb-1"><b>State(s) - </b>{{parkItem.get("states")|replace(",", ", ") or "No information available"}}</p>

@@ -5,49 +5,114 @@
 {% endblock %}
 
 {% block main %}
-    <div>
-        <h1><b>Welcome to {{park}}</b></h1>         
-        <div class="space"></div>
-        <div class="d-flex justify-content-around">
-            <A HREF="#about">Check out park information!</A>
-            <A HREF="#visitorcenters">Check out the visitor centers!</A>
-            <A HREF="#campgrounds">Check out the campgrounds!</A>
-            <A HREF="#alerts">Check out current alerts!</A>
-            <A HREF="#articles">Check out articles!</A>
-            
-            <A HREF="#events">Check out current events!</A>
-            <A HREF="#news">Check out news releases!</A>
-            <A HREF="#lessons">Check out educational programs!</A>
-            <A HREF="#people">Check out people!</A>
-            <A HREF="#places">Check out places!</A>
-        </div>
-    </div>
-    <br>
-    
 
-    <A NAME="about"></A>
-    <h3><i><u>Park Information</u></i></h3><br> 
-    <div class="list-group">
-        {% for parkItem in aboutParksList %}
-            {% if parkItem.get("fullName") == park %}
-                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ park }}</h5>
-                        <br><br>
-                    </div>
-                    
-                    <p class="mb-1">{{ parkItem.get("description") or "No information available"}} </p><br>
-                    <p class="mb-1"><b>State(s) -</b>{{parkItem.get("states") or "No information available"}}</p>
-                    <p class="mb-1"><b>Weather -</b> {{ parkItem.get("weatherInfo") or "No information available"}} </p>
-                    <p class="mb-1"><a href= {{ parkItem.get("directionsUrl") or "javascript:;" }}><b>Directions -</b></a> {{ parkItem.get("directionsInfo") or "No information available"}} </p>
+    <br><h1><b>Welcome to {{park}}</b></h1>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            {%for i in range(1, parkPicsURL|length)%}
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}"></li>
+            {%endfor%}
+        </ol>
+        
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+            <img class="d-block w-100" src="{{parkPicsURL[0]}}" alt="">
+            </div>
+
+            {%for i in range(1, parkPicsURL|length)%}
+                <div class="carousel-item">
+                <img class="d-block w-100" src="{{parkPicsURL[i]}}" alt="">
                 </div>
-            {%endif%}
+            {%endfor%}
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    
+    
+    <br>
+
+    <div class="d-flex justify-content-around">
+        <a href="#about" class="btn btn-outline-info" role="button" aria-pressed="true">Park Information</a>
+        <a href="#visitorcenters" class="btn btn-outline-info" role="button" aria-pressed="true">Visitor Centers</a>
+        <a href="#campgrounds" class="btn btn-outline-info" role="button" aria-pressed="true">Campgrounds</a>
+
+        <a href="#alerts" class="btn btn-outline-danger" role="button" aria-pressed="true">Alerts</a>
+        <a href="#articles" class="btn btn-outline-info" role="button" aria-pressed="true">Articles</a>            
+        <a href="#events" class="btn btn-outline-info" role="button" aria-pressed="true">Events</a>
+        <a href="#news" class="btn btn-outline-info" role="button" aria-pressed="true">News</a>
+
+        <a href="#lessons" class="btn btn-outline-info" role="button" aria-pressed="true">Educational Programs</a>
+        <a href="#people" class="btn btn-outline-info" role="button" aria-pressed="true">People</a>
+        <a href="#places" class="btn btn-outline-info" role="button" aria-pressed="true">Places</a>
+        <a href="#directions" class="btn btn-outline-info" role="button" aria-pressed="true">Directions</a>
+    </div>
+    <hr class="seperate">
+
+
+    <a NAME="about"></a>
+    <h3><i><u>Park Information</u></i></h3><br> 
+
+    
+    
+    <div class="list-group">
+        <!-- If the returned JSON is empty, display "No information available". Otherwise display relevent info -->
+        {%if aboutParksList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        <br>
+        {%endif%}
+
+        {% for parkItem in aboutParksList %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ park }}</h5>
+                    <br><br>
+                </div>
+                
+                <p class="mb-1">{{ parkItem.get("description") or "No information available"}} </p><br>
+                
+                <p class="mb-1"><b>Entrance Passes - </b>
+                    {%if parkItem.get("entrancePasses","")%}
+                        {%for pass in parkItem.get("entrancePasses","")%}
+                            <p class="mb-1 tab"><i>{{ pass.get("title") or ""}}</i> </p>
+                            <p class="mb-1 tab">{{ pass.get("description") or ""}} </p>
+                            <p class="mb-1 tab"><b>Fee - </b>{{ pass.get("cost")|currencyFormat or "No information available"}} </p><br>
+                        {%endfor%}
+                    {%else%}
+                        No information available</p>
+                    {%endif%}
+                
+                <p class="mb-1"><b>Weather -</b> {{ parkItem.get("weatherInfo") or "No information available"}} </p>
+                <p class="mb-1"><a href= {{ parkItem.get("directionsUrl") or "javascript:;" }} target="_blank"><b>Directions -</b></a> {{ parkItem.get("directionsInfo") or "No information available"}} </p>
+                <p class="mb-1"><b>State(s) - </b>{{parkItem.get("states")|replace(",", ", ") or "No information available"}}</p>
+            </div>
         {% endfor %}
     </div>
 
-    <A NAME="visitorcenters"></A>
-    <h3><i><u>Visitor Center Information</u></i></h3><br> 
+    <a name="visitorcenters"></a>
+    <br><h3><i><u>Visitor Center Information</u></i></h3><br> 
     <div class="list-group">
+        {%if visitorCentersList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        <br>
+        {%endif%}
+
         {% for visitorCenter in visitorCentersList %}
             <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
@@ -56,15 +121,24 @@
                 </div>
                 
                 <p class="mb-1">{{ visitorCenter.get("description") or "No information available"}} </p><br>
-                <p class="mb-1"><a href= {{ visitorCenter.get("directionsUrl") or "javascript:;" }}><b>Directions -</b></a> {{ visitorCenter.get("directionsInfo") or "No information available"}} </p>
+                <p class="mb-1"><a href= {{ visitorCenter.get("directionsUrl") or "javascript:;" }}target="_blank"><b>Directions -</b></a> {{ visitorCenter.get("directionsInfo") or "No information available"}} </p>
             </div>
         {% endfor %}
     </div>
 
     
-    <A NAME="campgrounds"></A>
+    <a name="campgrounds"></a>
         <br><h3><i><u>Campground Information</u></i></h3><br>          
         <div class="list-group">
+            {%if campgroundsList|length == 0%} 
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">No information available</h5>
+                </div>
+            </div>
+            <br>
+            {%endif%}
+
             {%for campground in campgroundsList%}
                 <div class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
@@ -79,21 +153,30 @@
                     <p class="mb-1"><b>Cellphone Reception -</b> {{ campground.get("accessibility").get("cellphonereception")  or "No information  available"}}    </p>
                     <p class="mb-1"><b>Bathroom Accessibility -</b> {{ campground.get("amenities").get("toilets")[0]  or "No information  available"}}    </p>
                     <p class="mb-1"><b>Additional Information -</b> {{ campground.get("accessibility").get("additionalinfo")  or "No information  available"}}    </p>
-                    <p class="mb-1"><a href={{campground.get("regulationsurl") or "javascript:;" }}><b>Regulations -</b></a> {{ campground.get("regulationsoverview") or "No information  available"}}    </p>
-                    <p class="mb-1"><a href={{campground.get("directionsUrl") or "javascript:;" }}><b>Directions -</b></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
+                    <p class="mb-1"><a href={{campground.get("regulationsurl") or "javascript:;" }}target="_blank"><b>Regulations -</b></a> {{ campground.get("regulationsoverview") or "No information  available"}}    </p>
+                    <p class="mb-1"><a href={{campground.get("directionsUrl") or "javascript:;" }}target="_blank"><b>Directions -</b></a> {{ campground.get("directionsoverview") or "No information  available"}}    </p>
                 
                 </div>     
             {% endfor %}
         </div>
 
     
-    <A NAME="alerts"></A>
+    <a name="alerts"></a>
     <br><h3><i><u>Alerts</u></i></h3><br>  
-    <div class="list-group">        
+    <div class="list-group"> 
+        {%if alertsList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        <br>
+        {%endif%}  
+
         {%for alert in alertsList%}
             <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><b> <a href= {{ alert.get("url") or "javascript:;" }}>{{ alert.get("title")}}</a></b></h5>
+                    <h5 class="mb-1"><b> <a href= {{ alert.get("url") or "javascript:;" }}target="_blank">{{ alert.get("title")}}</a></b></h5>
                     <br><br>
                 </div>                
                 <p class="mb-1">{{alert.get("description") or "No information available"}} </p>               
@@ -103,11 +186,20 @@
     </div>
     
 
-    <A NAME="articles"></A>
+    <a name="articles"></a>
     <br><h3><i><u>{{park}} Articles</u></i></h3><br>
-    <div class="list-group">           
+    <div class="list-group">     
+        {%if articlesList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        <br>
+        {%endif%}    
+      
         {%for article in articlesList%}
-            <a href= {{ article.get("url") or "javascript:;" }} class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href= {{ article.get("url") or "javascript:;" }} target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                 <img src={{article.get("listingimage").get("url") or "../static/default.jpg"}} style="width:150px;height:150px">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ article.get("title") or ""}}</h5>                    
@@ -119,9 +211,18 @@
     </div>
 
 
-    <A NAME="events"></A>
+    <a name="events"></a>
     <br><h3><i><u>{{park}} Events</u></i></h3><br>  
-    <div class="list-group">   
+    <div class="list-group">  
+        {%if eventsList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        <br>
+        {%endif%} 
+
         {%for event in eventsList%}
             {% set outer_loop = loop %}
             <div class="list-group-item list-group-item-action flex-column align-items-start">
@@ -136,8 +237,8 @@
                     <p class="mb-1"><b>Fee -</b> Free </p>
                 {%endif%}
                 
-                <p class="mb-1"><b>Location -</b> {{ event.get("Location")}} </p>
-                <hr>
+                <p class="mb-1"><b>Location -</b> {{ event.get("location","") or "No information available"}} </p>
+                <hr class="eventhr">
                 
                 {% if event.get("isrecurring")=="false"%}  
                     <p class="mb-1"><b> One Time Event!</b></p>
@@ -146,28 +247,43 @@
                 {%endif%}
                 
                 <p class="mb-1"><b>Days - </b>
-                    {%for dayIdx in range(2,dates[outer_loop.index0]|length)%}                
-                        Every {{dates[outer_loop.index0][dayIdx]}}
-                    {%endfor%}
+                    {% if dates[outer_loop.index0]|length>2%}
+                        {%for dayIdx in range(2,dates[outer_loop.index0]|length)%}                
+                            Every {{dates[outer_loop.index0][dayIdx]}}
+                        {%endfor%}
+                    {%else%}
+                        {{dates[outer_loop.index0][1] or "No information available"}} 
+                    {%endif%}
+                    </p>
                 </p>
 
-                <p class="mb-1"><b>Dates -</b> {{dates[outer_loop.index0][0]}} to {{dates[outer_loop.index0][1]}} </p>
+                <p class="mb-1"><b>Dates -</b>
+                    {% if dates[outer_loop.index0]|length>2%}
+                        {{dates[outer_loop.index0][0]}} to {{dates[outer_loop.index0][1]}} </p>
+                    {%else%}
+                        {{dates[outer_loop.index0][0] or "No information available"}} </p>
+                    {%endif%}
+                        
 
                 <p class="mb-1"><b>Times - </b>
-                    {%for timeIdx in range(0,event.get("times","")|length)%}
-                        {% if timeIdx < event.get("times")|length - 1 %}               
-                            {{event.get("times")[timeIdx].get("timestart")}}, 
-                        {%else%}                
-                            {{event.get("times")[timeIdx].get("timestart")}}
-                        {%endif%}
-                    {%endfor%}
+                    {%if event.get("times","")|length == 0%}
+                        No information available
+                    {%else%}
+                        {%for timeIdx in range(0,event.get("times","")|length) %}
+                            {% if timeIdx < event.get("times")|length - 1 %}               
+                                {{event.get("times")[timeIdx].get("timestart")}}, 
+                            {%else%}                
+                                {{event.get("times")[timeIdx].get("timestart","") or "No information available"}}
+                            {%endif%}
+                        {%endfor%}
+                    {%endif%}
                 </p>
                 
-                <p class="mb-1"><b>Duration - {{ duration[loop.index0]}}</b></p>
-                <hr>
-                <p class="mb-1"><b>Duration - {{ duration[loop.index0]}}</b></p>
+                <hr class="eventhr">
+                <p class="mb-1"><b>Duration - </b>{{ duration[loop.index0] or "No information available"}}</p>
 
-                <p class="mb-1"><b>Description -</b> {{event.get("description").replace("<p>","").replace("</p>","") or "No information available"}}</p><br>
+                <!-- Description uses parses information from NPS and renders their HTML (used safe to render as HTML instead of text) so the stylings might look a bit weird-->
+                <p class="mb-1"><b>Description -</b> {{event.get("description")|safe or "No information available"}}</p>
                 
                 
             </div>
@@ -175,11 +291,20 @@
     </div>
 
 
-    <A NAME="news"></A>
+    <a name="news"></a>
     <br><h3><i><u>{{park}} News Releases</u></i></h3><br>
-    <div class="list-group">          
+    <div class="list-group">     
+        {%if newsList|length == 0%} 
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">No information available</h5>
+                </div>
+            </div>
+            <br>
+        {%endif%}
+         
         {%for news in newsList%}
-            <a href= {{ news.get("url") or "javascript:;" }} class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href= {{ news.get("url") or "javascript:;" }} target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                 <img src={{news.get("image").get("url") or "../static/default.jpg"}} style="width:150px;height:150px">                
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ news.get("title")}} </h5>                                       
@@ -193,13 +318,22 @@
 
 
 
-    <A NAME="lessons"></A>
+    <a name="lessons"></a>
     <br><h3><i><u>Educational Activities</u></i></h3><br>  
     <div class="list-group">        
+        {%if lessonsList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        <br>
+        {%endif%}
+    
         {%for lesson in lessonsList%}
             <div class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><a href= {{ lesson.get("url") or "javascript:;" }}><u><b>{{ lesson.get("title") or "No information available"}}</b></u></a></h5>
+                    <h5 class="mb-1"><a href= {{ lesson.get("url") or "javascript:;" }} target="_blank"><u><b>{{ lesson.get("title") or "No information available"}}</b></u></a></h5>
                     <br><br>
                 </div>
 
@@ -208,17 +342,25 @@
                 <p class="mb-1"><b>Grades Level -</b> {{ lesson.get("gradelevel") or "No information available"}} </p>
                 <p class="mb-1"><b>Subject -</b> {{ lesson.get("subject") or "No information available" }} </p>               
                 <p class="mb-1"><b>Duration -</b> {{ lesson.get("duration") or "No information available"}}  </p> 
-                <p class="mb-1"><b>Common Core Standards -</b> {{ lesson.get("commoncore").get("mathstandards") or "No information available"}}  </p>          
+                <p class="mb-1"><b>Common Core Standards -</b> {{ lesson.get("commoncore").get("mathstandards")[0] or "No information available"}}  </p>          
                 <p class="mb-1"><b>State Standards -</b> {{ lesson.get("commoncore").get("statestandards") or "No information available"}}  </p>  
             </div>
         {% endfor %}
     </div>
 
-    <A NAME="people"></A>    
+    <a name="people"></a>    
     <br><h3><i><u>People</u></i></h3> <br> 
     <div class="list-group">
+        {%if peopleList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        {%endif%}
+    
         {%for person in peopleList%}
-            <a href= {{ person.get("url") or "javascript:;" }} class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href= {{ person.get("url") or "javascript:;" }} target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                 <img src={{person.get("listingimage").get("url") or "../static/default.jpg"}} style="width:150px;height:150px">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ person.get("title") or "No information available"}}   </h5>
@@ -226,26 +368,61 @@
                     <br><br>
                 </div>
 
-                <p class="mb-1"><b>Description:</b> {{ person.get("listingdescription") or "No information available"}}    </p><br>
+                <p class="mb-1"><b>Description:</b> {{ person.get("listingdescription") or "No information available"}}    </p>
             </a>     
         {% endfor %}
     </div>
 
-    <A NAME="places"></A>
+    <a name="places"></a>
     <br><h3><i><u>Places</u></i></h3><br> 
-    <div class="list-group">        
+    <div class="list-group"> 
+        {%if placesList|length == 0%} 
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No information available</h5>
+            </div>
+        </div>
+        {%endif%}
+
         {%for place in placesList%}            
-            <a href= {{ place.get("url") or "javascript:;" }} class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href= {{ place.get("url") or "javascript:;" }} target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                 <img src={{place.get("listingimage").get("url") or "../static/default.jpg"}} style="width:150px;height:150px">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{ place.get("title") or "No information available"}} </h5>                                       
                     <br><br>
                 </div>               
 
-                <p class="mb-1">{{ place.get("listingdescription") or ""}} </p><br>
+                <p class="mb-1">{{ place.get("listingdescription") or ""}} </p>
             </a>    
-        {% endfor %}
+        {% endfor %}        
     </div>
+
+    <a name="directions"></a>
+    <br><h3><i><u>Direction Information</u></i></h3><br> 
+    <input class="btn btn-primary" type="button" id="routebtn" value="Get route">
+    <small id="warning" align="center" class="form-text text-muted">Please note that clicking this button will share your location.</small>
+    <br>
+    <div id="map-canvas"></div>    
+    <br>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Getting to {{ park }}</h5>
+                <br><br>
+            </div>
+            
+            <p id="info" class="mb-1">Please click the route button above the map to get travel information.</p>
+            
+        </div>        
+    </div><br>
+
+
+        
+
+    <script src="{{url_for('static', filename='map.js') }}"></script>
+    <script>
+        mapLocation("{{park|safe}}", "{{lat_long[0]|safe}}", "{{lat_long[1]|safe}}");
+    </script>
 
 {% endblock %}
 
