@@ -105,7 +105,8 @@ nav .navbar-brand .green
 
  
 /* Park html page CSS */
-    
+
+
 
 .carousel-item img {
     min-height: 62vh;
@@ -130,7 +131,13 @@ h3{
     margin-left: 15px;
 }
 
+.redTextAlert {
+    color: 	#B22222
+}
 
+.redTextAlert:hover {
+    color: #B22222
+}
 .list-group{
     width: 95%;
     margin: auto;
@@ -146,6 +153,7 @@ h3{
 
 p{
     text-align: left;
+    margin: 5px;
 }
 
 .tab{
@@ -274,3 +282,20 @@ p{
     background-color: hsla(201, 100%, 50%, 0.5)
 }
 
+/*SVG icons*/
+
+.icon {
+    display: inline-flex;
+    align-self: center;
+}
+
+.icon svg, .icon img {
+    height: 1em;
+    width: 1em;
+    fill: currentColor;
+}
+
+.icon.baseline svg, .icon img {
+    top: .125em;
+    position: relative;
+}
