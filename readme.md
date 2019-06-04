@@ -1,6 +1,6 @@
 # Capital One Software Engineering Summit MindSumo Challenge
 
-Website: http://
+Website: https://
 
 ## Project Details
 
