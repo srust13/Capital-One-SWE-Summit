@@ -59,7 +59,8 @@ def search():
             if aboutParksList:
                 for parkItem in aboutParksList:
                     if parkCode == parkItem.get("parkCode"):
-                        # park=parkItem.get("fullName") is not the most effective call since the NPS API has weird names for parks such as "Haleakal&#257; National Park". Instead get the park name from the dict which parses list of names from NPS official site using Beautiful Soup
+                        # park=parkItem.get("fullName") is not the most effective call since the NPS API has HTML embedded for park names
+                        # such as "Haleakal&#257; National Park" (see README). Instead get the park name from the dict which parses list of names from NPS official site using Beautiful Soup
                         for counter, parkCodeValue in enumerate(parksDict.values()):
                             if parkCode==parkCodeValue:
                                 park=list(parksDict.keys())[counter]
@@ -130,8 +131,7 @@ def advanced_search():
         query=request.form.get("searchQuery") 
         parkPicsURL={}
         parksURL={}
-        aboutParksList=getInfo("parks", "","",query, "entrancePasses")
-        
+        aboutParksList=getInfo("parks", "","",query, "entrancePasses")        
         
         # If the National Park Service API responded with a non-empty JSON, get the images for the parks and store the URL that will be used in
         # the anchor tags in the HTML for the park in a dict. Otherwise redirect back to the page and notify the user that the request has no results

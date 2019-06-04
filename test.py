@@ -1,12 +1,4 @@
-def use():
-    myset={"four"}
-    mylist=["one","two","one"]
-    for i in mylist:
-        myset.add(i)
-    myset=list(myset)
-    myset.sort(), mylist.sort() 
-    return myset, mylist
+import os
 
-print(use()[0])
-
-print(use()[1])
+print()
+print(os.environ.get("GOOGLE_MAPS_API_KEY"))
