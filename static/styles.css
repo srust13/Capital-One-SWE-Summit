@@ -206,12 +206,12 @@ p{
     margin-left: auto;
     justify-items: center;
     align-content: center;
-
 }
 
 .keyword{
     min-width: 70vw;
     max-width: 70vw;
+    vertical-align: middle;
 }
 
 .form-control.form-control-lg{
