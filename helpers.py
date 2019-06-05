@@ -1,4 +1,4 @@
-import requests, json, html, os
+import requests, json, html
 from random import randint
 from datetime import datetime
 from bs4 import BeautifulSoup
