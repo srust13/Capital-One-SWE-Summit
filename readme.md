@@ -1,6 +1,6 @@
 # Capital One Software Engineering Summit MindSumo Challenge
 
-Website: https://shubhamrustagi-capitalone.herokuapp.com/search
+Website: https://shubhamrustagi-capitalone.herokuapp.com
 
 ## Project Details
 
