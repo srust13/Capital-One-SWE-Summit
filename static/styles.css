@@ -1,10 +1,9 @@
+/* Logo NPS */
 nav .navbar-brand
 {
-    /* size for brand */
     font-size: xx-large;
 }
 
-/* colors for brand */
 nav .navbar-brand .blue
 {
     color: #537fbe;
@@ -19,36 +18,31 @@ nav .navbar-brand .green
     color: #2e944b;
 }
 
+/* General styles. Each layout page has a different background */
 
 .layoutBGIMG{
-    background: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url("../static/main.jpg");
     background: url("../static/main.jpg");
     background-position: cover;
-    background-size: cover;
-    
-    
+    background-size: cover;      
 }
 
 .whiteBGIMG{
     background-color: #f7f7f7;
 }
 
-
 .cont
 {
-    /* override Bootstrap's 100% width for form controls */
     width: auto;    
-    /* center contents */
     text-align: center;
 }
 
-
+/* Insert a space between bottom of nav bar and content on page */
 .space
 {
     padding-top: 8.5vh; 
 }
 
-
+/* Whole page container */
 #page-container {  
     position: relative; 
     min-height: 100vh;
@@ -68,7 +62,7 @@ nav .navbar-brand .green
 
 
 
-/* Search tab CSS */
+/* Search.html CSS */
 #park{
   width:50vw;  
   margin-top: 20px;
@@ -100,14 +94,8 @@ nav .navbar-brand .green
  option:hover{
   cursor: pointer;
  }
- 
-
-
- 
-/* Park html page CSS */
-
-
-
+  
+/* Park.html page CSS */
 .carousel-item img {
     min-height: 62vh;
     height: 62vh;
@@ -116,11 +104,13 @@ nav .navbar-brand .green
     display: block;
   }
 
+/* hr after button hyperlinks */
 hr.seperate {
     border-top: 1px dashed black;
     width: 90vw;
-  }
+}
 
+/* hr used in events */
 hr.eventhr{
     border-color: darkgray;
 }
@@ -138,18 +128,18 @@ h3{
 .redTextAlert:hover {
     color: #B22222
 }
+
+/* Displaying info in park.html CSS */
 .list-group{
     width: 95%;
     margin: auto;
     text-align: left;
 }
 
-
 .list-group-item.list-group-item-action.flex-column.align-items-start{
     border-color: rgb(56,56,56);
     background-color: #f7f7f7;
 }
-
 
 p{
     text-align: left;
@@ -161,24 +151,19 @@ p{
     margin-left: 2.1em;
 }
 
-.form-control.form-control-lg{
-    width: 80vw;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
+
+
+/* General Bootstrap buttons */
 .btn-primary{
     width:25vw;
 }
 
+/* Map CSS in park.html */
 #map {
     height: 350px;
     position: relative;
     width: 100%;
-  }
+}
 
 #map-canvas {
     height: 70vh;
@@ -192,30 +177,36 @@ p{
     font-size: 20px;
 }
 
+
+
 /* Search html page CSS */
-
-
-
 .search-container {
     background-color: hsla(202, 95%, 15%, 0.6);
     padding: 50px 30px;
-    min-width: 600px;
-    width: 50%;
-    max-width: 600px;
+    min-width: 35vw;
+    max-width: 35vw;
     margin-right: auto;
     margin-left: auto;
     justify-items: center;
     align-content: center;
 }
 
+/* Keyword search form */
+.form-control.form-control-lg{
+    width: 80vw;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
 .keyword{
     min-width: 70vw;
     max-width: 70vw;
     vertical-align: middle;
-}
-
-.form-control.form-control-lg{
-    width: 100%;
 }
 
 .search-title {
@@ -238,6 +229,7 @@ p{
     margin-bottom: 20px;
 }
 
+/* Select2 menu stylings */
 .select2-selection__rendered {
     line-height: 36px !important;
     font-size: 1.1em;
@@ -283,8 +275,8 @@ p{
     background-color: hsla(201, 100%, 50%, 0.5)
 }
 
-/*SVG icons*/
 
+/*SVG icons*/
 .icon {
     display: inline-flex;
     align-self: center;

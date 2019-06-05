@@ -43,7 +43,7 @@ def getInfo(infoType, parkCode, stateCode, parkName, fields):
     api= os.environ['NPS_API_KEY']
     results=[]
     
-    #Try requesting. If it fails, return an empty array
+    #Try requesting. If it fails, return an empty array. Condition checked in application.py
     try:
         endpoint = requests.get(f"{url}/{infoType}?parkCode={parkCode}&stateCode={stateCode}&q={parkName}&fields={fields}&api_key={api}")
         data = endpoint.json() 

@@ -35,10 +35,9 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    
-    
+        
     <br>
-
+    
     <div class="d-flex justify-content-around">
         <a href="#about" class="btn btn-outline-info" role="button" aria-pressed="true">Park Information</a>
         <a href="#visitorcenters" class="btn btn-outline-info" role="button" aria-pressed="true">Visitor Centers</a>
@@ -54,6 +53,7 @@
         <a href="#places" class="btn btn-outline-info" role="button" aria-pressed="true">Places</a>
         <a href="#directions" class="btn btn-outline-info" role="button" aria-pressed="true">Directions</a>
     </div>
+
     <hr class="seperate">
     
     <a NAME="about"></a>
@@ -87,9 +87,8 @@
                     {%if parkItem.get("entrancePasses","")%}
                         {%for pass in parkItem.get("entrancePasses","")%}
                             <p class="mb-1 tab"><i>{{ pass.get("title") or ""}}</i> </p>
-                            <p class="mb-1 tab">{{ pass.get("description") or ""}} </p>
-                            
-                            <p class="mb-1 tab"><b>Fee - </b>{{ pass.get("cost")|currencyFormat or "No information available"}} </p>
+                            <p class="mb-1 tab">{{ pass.get("description") or ""}} </p>                            
+                            <p class="mb-1 tab"><b>Fee - </b>{{ pass.get("cost")|currencyFormat or "No information available"}} </p><br>
                             
                         {%endfor%}
                     {%else%}
