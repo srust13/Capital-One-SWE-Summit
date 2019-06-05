@@ -1,5 +1,5 @@
 beautifulsoup4==4.7.1
-boto==2.49.0
+boto3==1.9.161
 bs4==0.0.1
 Flask==1.0.2
 Flask-Session==0.3.1
@@ -8,5 +8,3 @@ Jinja2==2.10
 jsonschema==3.0.1
 requests==2.21.0
 soupsieve==1.9.1
-
-
