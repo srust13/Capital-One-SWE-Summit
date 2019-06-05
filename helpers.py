@@ -2,7 +2,7 @@ import requests, json, html, os
 from random import randint
 from datetime import datetime
 from bs4 import BeautifulSoup
-from boto.s3.connection import S3Connection
+
 
 # Use Beautiful Soup to generate a list of all the park names and the states to be used in the search bar by parsing the HTML from the NPS site (explained in README)
 def parseParkNamesAndStates():
@@ -40,7 +40,7 @@ def parseParkNamesAndStates():
 # Make a call to the API to get relevant information. infoType can equal "parks", visitorCenters", "alerts", etc
 def getInfo(infoType, parkCode, stateCode, parkName, fields):    
     url="https://developer.nps.gov/api/v1"
-    api= str(S3Connection(os.environ['NPS_API_KEY']))
+    api= os.environ['NPS_API_KEY']
     results=[]
     
     #Try requesting. If it fails, return an empty array
