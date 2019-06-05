@@ -40,7 +40,7 @@ def parseParkNamesAndStates():
 # Make a call to the API to get relevant information. infoType can equal "parks", visitorCenters", "alerts", etc
 def getInfo(infoType, parkCode, stateCode, parkName, fields):    
     url="https://developer.nps.gov/api/v1"
-    api= os.environ.get("NPS_API_KEY")
+    api= "nMeJTZeHbgdfQeRtllNPQImS4eP37B83Iu7Mt1Fe"
     results=[]
     
     #Try requesting. If it fails, return an empty array
