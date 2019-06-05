@@ -18,7 +18,7 @@ This web application serves as a sort of information kiosk for the [National Par
 - [Bootstrap](https://getbootstrap.com/docs/4.3) for frontend styling and [Jinja2](http://jinja.pocoo.org/docs/2.10/) for templating 
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse HTML pages from NPS
 
-*Note: The NPS API key is an environment variable from the local machine. Therefore, if cloning this repo. is desired, you must request an API key [here](https://www.nps.gov/subjects/developer/get-started.htm). The Google Maps API couldn't be protected in the same manner considering that the key has to be included in the script tags of the HTMl in order to load the JS files and data from Google's servers. To remedy this situation, API key restrictions have been placed that allow it to be protected in a visible public domain.*
+*Note: The NPS API key is an environment variable from the local machine. Therefore, if cloning this repo. is desired and running it locally, you must register for an API key [here](https://www.nps.gov/subjects/developer/get-started.htm). The Google Maps API couldn't be protected in the same manner considering that the key has to be included in the script tags of the HTMl in order to load the JS files and data from Google's servers. To remedy this situation, API key restrictions have been placed that allow it to be protected in a visible public domain.*
 
 ## The build
 
