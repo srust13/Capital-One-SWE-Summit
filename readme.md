@@ -2,7 +2,7 @@
 
 Website: https://shubhamrustagi-capitalone.herokuapp.com 
 
-*Tip: If using mobile to access the link, request to see "Desktop site" on the broswer as it will create for a better user experience.*
+*Tip: If using a mobile device to access the link, request to see "Desktop site" on the broswer as it will create for a better user experience.*
 
 ## Project Details
 
@@ -63,4 +63,3 @@ This web application serves as a sort of information kiosk for the [National Par
 - Being exposed to JavaScript and its semantics, as well as learning about asynchronous calls and callbacks.
 
 *General Note: There are 2 layout.html files to compensate for the fact that there are different backgrounds and the color schemes are slightly different depending on the page you go to. Instead of having 2 parallel layout files, 2 layout files in series could have been used but this would have made the code a little harder to follow. But in general, if scaling this application is desired, then this would be a better methodology to follow.*
-

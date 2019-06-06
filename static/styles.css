@@ -45,8 +45,7 @@ nav .navbar-brand .green
 /* Whole page container */
 #page-container {  
     position: relative; 
-    min-height: 100vh;
-    
+    min-height: 100vh;    
 }
 
 #content-wrap {  
@@ -183,8 +182,9 @@ p{
 .search-container {
     background-color: hsla(202, 95%, 15%, 0.6);
     padding: 50px 30px;
-    min-width: 35vw;
-    max-width: 35vw;
+    min-width: 300px;
+    width: 50%;
+    max-width: 600px;
     margin-right: auto;
     margin-left: auto;
     justify-items: center;
