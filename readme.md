@@ -47,7 +47,7 @@ This web application serves as a sort of information kiosk for the [National Par
 - Used Google Maps Distance Matrix API to calculate the distance from start point to finish point on the route shown in the map.
 
 #### Using relevant symbols from the NPS symbols library
-- Used NPS symbol library SVGs to display relevant information about the selected park.
+- Used NPS symbol library SVGs to display relevant information about the selected park and use as a favicon.
 - SVGs were chosen over PNGs for several reasons, some of being: 1) Faster loading times 2) Better resolution 3) More responsive
 - All SVGs were placed in a seperate file to create less cluttered and easily maintainable HTML docs.
 
