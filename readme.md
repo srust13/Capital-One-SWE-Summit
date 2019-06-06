@@ -47,7 +47,7 @@ This web application serves as a sort of information kiosk for the [National Par
 - Used Google Maps Distance Matrix API to calculate the distance from start point to finish point on the route shown in the map.
 
 #### Using relevant symbols from the NPS symbols library
-- Used NPS symbol library SVGs to display relevant information about the selected park and use as a favicon.
+- Used NPS symbol library SVGs to display relevant information about the selected park.
 - SVGs were chosen over PNGs for several reasons, some of being: 1) Faster loading times 2) Better resolution 3) More responsive
 - All SVGs were placed in a seperate file to create less cluttered and easily maintainable HTML docs.
 
@@ -62,4 +62,4 @@ This web application serves as a sort of information kiosk for the [National Par
 - Building a web application from ground up that has a lot of moving parts and uses a multitude of languages, packages, and APIS and integrating all the parts with one another to work responsively and efficiently.
 - Being exposed to JavaScript and its semantics, as well as learning about asynchronous calls and callbacks.
 
-*General Note: There are 2 layout files to compensate for the fact that there are 2 different backgrounds and the color schemes are slightly different depending on the page you go to. Instead of having 2 parallel layout files, 2 layout files in series could have been used but this would have made the code a little harder to follow. But in general, if scaling this application is desired, then this would be a better methodology to follow.*
+*General Note: There are 2 layout files to compensate for the fact that there are 2 different backgrounds and 2 different color schemes depending on the page you visit. Instead of having 2 parallel layout files, 2 layout files in series could have been used but this would have made the code a little harder to follow but easier to maintain. But in general, if scaling this application is desired, then this would be a better methodology to follow.*
