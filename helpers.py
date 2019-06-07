@@ -3,7 +3,6 @@ from random import randint
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-
 # Use Beautiful Soup to generate a list of all the park names and the states to be used in the search bar by parsing the HTML from the NPS site (explained in README)
 def parseParkNamesAndStates():
     # Both dicts defined as key:value -> name:code
@@ -38,14 +37,14 @@ def parseParkNamesAndStates():
     return parks,states
 
 # Make a call to the API to get relevant information. infoType can equal "parks", visitorCenters", "alerts", etc
-def getInfo(infoType, parkCode, stateCode, parkName, fields):    
+def getInfo(infoType, parkCode, stateCode, parkName, field):    
     url="https://developer.nps.gov/api/v1"
     api= os.environ['NPS_API_KEY']
     results=[]
     
-    #Try requesting. If it fails, return an empty array. Condition checked in application.py
+    #Try requesting. If it fails, return an empty array. Condition checked in application.py. Limit set to 500 to ensure all responses get returned instead of 50 by default
     try:
-        endpoint = requests.get(f"{url}/{infoType}?parkCode={parkCode}&stateCode={stateCode}&q={parkName}&fields={fields}&api_key={api}")
+        endpoint = requests.get(f"{url}/{infoType}?parkCode={parkCode}&stateCode={stateCode}&limit=500&q={parkName.replace(' ','%20')}&fields={field}&api_key={api}")
         data = endpoint.json() 
 
         #if a park code is provided, make sure each item in the JSON response matches the park code. Matching by parkCode was chosen instead of by full name (see README)
@@ -65,7 +64,6 @@ def getInfo(infoType, parkCode, stateCode, parkName, fields):
     except:
         return []
         
-
 # Use Beautiful Soup to get the link of the first image associated with a park (makes for a nice hero picture) and then gets the other images from API request
 def getParkPicsURL(parkCode):
     images=[]
@@ -152,7 +150,6 @@ def timeNeeded(startTime, endTime):
     else:
         return str(hours)+ " hours"
 
-
 # Parse the API response: "latLong": "lat:61.4182147, long:-142.6028439" and return the latitude and longitude strings
 def parseLatLong(geocode):
     geocodes=[]
@@ -162,4 +159,3 @@ def parseLatLong(geocode):
     longitude=geocode[geocode.index("long:")+5:]
     geocodes=[latitude, longitude]    
     return geocodes
-

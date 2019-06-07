@@ -1,0 +1,83 @@
+{% extends "layoutBGIMG.html" %}
+
+{% block title %}
+    Designation Search
+{% endblock %}
+
+{% block main %}
+<div class="space"></div>
+
+<div class="search-container">
+    <h3 class="search-title">Search for a park by designation</h3>
+    <form action="/designation-search" method="post">  
+      <div class="input-group">
+        <select id="e3" class="designation" name="designation">
+            <option value="Affiliated Area">Affiliated Area</option>
+            <option value="Cultural Heritage Corridor">Cultural Heritage Corridor</option>
+            <option value="Ecological & Historic Preserve">Ecological & Historic Preserve</option>
+            <option value="Heritage Area">Heritage Area</option>
+            <option value="International Historic Site">International Historic Site</option>
+            <option value="International Park">International Park</option>
+            <option value="Memorial">Memorial</option>
+            <option value="Memorial Parkway">Memorial Parkway</option>
+            <option value="National Battlefield">National Battlefield</option>
+            <option value="National Battlefield Park">National Battlefield Park</option>
+            <option value="National Battlefield Site">National Battlefield Site</option>
+            <option value="National Geologic Trail">National Geologic Trail</option>
+            <option value="National Heritage Area">National Heritage Area</option>
+            <option value="National Heritage Corridor">National Heritage Corridor</option>
+            <option value="National Heritage Partnership">National Heritage Partnership</option>
+            <option value="National Historic Area">National Historic Area</option>
+            <option value="National Historic District">National Historic District</option>
+            <option value="National Historic Site">National Historic Site</option>
+            <option value="National Historic Trail">National Historic Trail</option>
+            <option value="National Historical Park">National Historical Park</option>
+            <option value="National Historical Park and Ecological Preserve">National Historical Park and Ecological Preserve</option>
+            <option value="National Historical Park and Preserve">National Historical Park and Preserve</option>
+            <option value="National Historical Reserve">National Historical Reserve</option>
+            <option value="National Lakeshore">National Lakeshore</option>
+            <option value="National Memorial">National Memorial</option>
+            <option value="National Military Park">National Military Park</option>
+            <option value="National Monument">National Monument</option>
+            <option value="National Monument & Preserve">National Monument & Preserve</option>
+            <option value="National Monument and Historic Shrine">National Monument and Historic Shrine</option>
+            <option value="National Monument of America">National Monument of America</option>
+            <option value="National Park">National Park</option>
+            <option value="National Park & Preserve">National Park & Preserve</option>
+            <option value="National Parks">National Parks</option>
+            <option value="National Preserve">National Preserve</option>
+            <option value="National Recreation Area">National Recreation Area</option>
+            <option value="National Recreational River">National Recreational River</option>
+            <option value="National Reserve">National Reserve</option>
+            <option value="National River">National River</option>
+            <option value="National River & Recreation Area">National River & Recreation Area</option>
+            <option value="National River and Recreation Area">National River and Recreation Area</option>
+            <option value="National Scenic River">National Scenic River</option>
+            <option value="National Scenic Riverway">National Scenic Riverway</option>
+            <option value="National Scenic Riverways">National Scenic Riverways</option>
+            <option value="National Scenic Trail">National Scenic Trail</option>
+            <option value="National Seashore">National Seashore</option>
+            <option value="National Wild and Scenic River">National Wild and Scenic River</option>
+            <option value="National and State Parks">National and State Parks</option>
+            <option value="Park">Park</option>
+            <option value="Parkway">Parkway</option>
+            <option value="Part of Colonial National Historical Park">Part of Colonial National Historical Park</option>
+            <option value="Part of Statue of Liberty National Monument">Part of Statue of Liberty National Monument</option>
+            <option value="Scenic & Recreational River">Scenic & Recreational River</option>
+            <option value="Wild & Scenic River">Wild & Scenic River</option>
+            <option value="Wild River">Wild River</option>
+        </select>
+      </div>    
+      <button class="search-button" type="submit">Explore</button>
+    </form>
+  </div>
+<br>
+
+
+<script>
+    $(document).ready(function() { $("#e3").select2({ width: '100%' }); });
+</script>
+  
+  
+{% endblock %}
+  

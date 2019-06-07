@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Explore 
+    State Search 
 {% endblock %}
 
 {% block main %}
@@ -32,19 +32,25 @@
                 
                 <p class="mb-1">
                 <div class="icon baseline">
-                    <svg><use xlink:href="../static/sprites.svg#entPass"/></svg>     
+                    <svg><use xlink:href="../static/sprites.svg#entFees"/></svg>     
                 </div>              
-                <b>Entrance Passes - </b>
-
-                {%if parkItem.get("entrancePasses","")%}
-                    {%for pass in parkItem.get("entrancePasses","")%}
-                        <p class="mb-1 tab"><i>{{ pass.get("title") or ""}}</i> </p>
-                        <p class="mb-1 tab">{{ pass.get("description") or ""}} </p>                        
-                        <p class="mb-1 tab"><b>Fee - </b>{{ pass.get("cost")|currencyFormat or "No information available"}} </p>                        
-                    {%endfor%}
-                {%else%}
-                    No information available</p>
-                {%endif%}
+                <b>Entrance Fees - </b>
+                    {%if parkItem.get("entranceFees", "")%}
+                        {%for pass in parkItem.get("entranceFees", "")%}
+                            {%if pass.get("title", "")%}
+                                <p class="mb-1 tab"><i>{{ pass.get("title") or ""}}</i> <br>
+                            {%endif%}
+                            {%if pass.get("description", "")%}
+                                {{ pass.get("description") or ""}} <br> 
+                            {%endif%}
+                            {%if pass.get("cost", "")%}
+                                <b>Fee - </b>{{ pass.get("cost")|currencyFormat or "No information available"}} 
+                            {%endif%}
+                            <p>                       
+                        {%endfor%}
+                    {%else%}
+                        No information available</p>
+                    {%endif%}
             
                 <p class="mb-1">
                 <div class="icon baseline">
@@ -60,9 +66,15 @@
                 
                 <p class="mb-1">
                 <div class="icon baseline">
-                    <svg><use xlink:href="../static/sprites.svg#state"/></svg>
+                    <svg><use xlink:href="../static/sprites.svg#location"/></svg>
                 </div>
                 <b>State(s) - </b>{{parkItem.get("states")|replace(",", ", ") or "No information available"}}</p>
+
+                <p class="mb-1">
+                <div class="icon baseline">
+                    <svg><use xlink:href="../static/sprites.svg#designation"/></svg>     
+                </div> 
+                <b>Designation -</b> {{ parkItem.get("designation") or "No information available"}} </p>
 
             </a>
         {% endfor %}

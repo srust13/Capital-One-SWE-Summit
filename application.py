@@ -55,7 +55,7 @@ def search():
             if park:
                 parkCode=parksDict[park]
             
-            aboutParksList=getInfo("parks",parkCode,"","","entrancePasses")
+            aboutParksList=getInfo("parks",parkCode,"","", "entranceFees")
             if aboutParksList:
                 for parkItem in aboutParksList:
                     if parkCode == parkItem.get("parkCode"):
@@ -104,7 +104,7 @@ def search():
             state=statesDict[fullStateName]
             parkPicsURL={}
             parksURL={}
-            aboutParksList=getInfo("parks", "",state,"", "entrancePasses")
+            aboutParksList=getInfo("parks", "",state,"", "entranceFees")
 
             # Generate a list of parks that are in the same state as the state selected
             stateParksList=[park for park in aboutParksList if park.get("states").index(state)>=0]            
@@ -126,12 +126,12 @@ def search():
   
 # Search using a keyword as input
 @app.route("/keyword-search", methods=["GET","POST"])
-def advanced_search():
+def keyword_search():
     if request.method=="POST":
         query=request.form.get("searchQuery") 
         parkPicsURL={}
         parksURL={}
-        aboutParksList=getInfo("parks", "","",query, "entrancePasses")        
+        aboutParksList=getInfo("parks", "","",query, "entranceFees")        
         
         # If the National Park Service API responded with a non-empty JSON, get the images for the parks and store the URL that will be used in
         # the anchor tags in the HTML for the park in a dict. Otherwise redirect back to the page and notify the user that the request has no results
@@ -142,7 +142,7 @@ def advanced_search():
                     parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
                 except:
                     parkPicsURL[myPark] = ""
-                # Url of the park selected
+                # Url of the respective park
                 parksURL[myPark]= "/search?parkCode="+myPark
             return render_template("query.html", query=query, aboutParksList=aboutParksList, parkPicsURL=parkPicsURL, parksURL=parksURL) 
         else:
@@ -150,6 +150,38 @@ def advanced_search():
             return redirect("/keyword-search")
     else:
         return render_template("keyword-search.html")
+
+# Search by designation
+@app.route("/designation-search", methods=["GET","POST"])
+def designation_search():
+    if request.method=="POST":
+        designation=request.form.get("designation") 
+        parkPicsURL={}
+        parksURL={}
+        designationParksList=[]
+        aboutParksList=getInfo("parks", "","", designation, "entranceFees")  
+        
+        # If the National Park Service API responded with a non-empty JSON, get a list of all the parks that match the designation selected by the user,
+        # get the images for the parks and store the URL that will be used in the anchor tags in the HTML for the park in a dict. Otherwise redirect 
+        # back to the page and notify the user that the request has no results
+        if aboutParksList:
+            for park in aboutParksList:
+                if designation == park.get("designation"):
+                    print(park.get("fullName"))
+                    designationParksList.append(park)
+                    myPark=park.get("parkCode")
+                    try:
+                        parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
+                    except:
+                        parkPicsURL[myPark] = ""
+                    # Url of the respective park
+                    parksURL[myPark]= "/search?parkCode="+myPark
+            return render_template("designations.html", designation=designation, designationParksList=designationParksList, parkPicsURL=parkPicsURL, parksURL=parksURL) 
+        else:
+            flash("No parks were found that fit the selected designation. Please try a different search")
+            return redirect("/designation-search")
+    else:
+        return render_template("designation-search.html")
 
 
 # Jinja custom template filter to format value in currency

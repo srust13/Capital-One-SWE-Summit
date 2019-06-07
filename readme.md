@@ -2,11 +2,11 @@
 
 Website: https://shubhamrustagi-capitalone.herokuapp.com 
 
-*Tip: If using a mobile device to access the link, request to see "Desktop site" on the broswer as it will create for a better user experience. Some features might not appear properly on a mobile device.*
+*Tip: If using a mobile device to access the link, request to see "Desktop site" on the browser as it will create for a better user experience. Some features might not appear properly on a mobile device.*
 
 ## Project Details
 
-This web application serves as a sort of information kiosk for the [National Park Service](https://www.nps.gov/index.htm). Deatiled below is information on the technologies used and the features in the app, as well as why certain things were done the way they were. Also included are some challenges I faced along the way and the accomplishments of the project.
+This web application serves as a virtual information kiosk for the [National Park Service](https://www.nps.gov/index.htm). Detailed below is information on the technologies used and the features in the app, as well as why certain things were done the way they were. Also included are some challenges I faced along the way and the accomplishments of the project.
 
 ## List of APIs and tools used
 
@@ -27,10 +27,10 @@ This web application serves as a sort of information kiosk for the [National Par
 ### Required features
 
 #### Designation and state filtering
-- Users can select either a park location to see that specific park, or select a state to see all the parks associated with that state. The list of parks and states was compiled with Beautiful Soup.
+-  Users can select any designation or select a state to see all the parks associated with that state. The list of designations was run by calling the API with the list of all parks and hard coding the designation values. Hard coding the designation values was not desirable, but done because the API invariably fails when trying to access all the park names (see "Challenges" section). The designation search page sometimes takes an extend period of time to show results depending on the selected option, as it has a relatively large JSON response size. The list of parks and states was compiled with Beautiful Soup, parsing the NPS website.
 
 #### Name and keyword search
-- Users can input a keyword to see all the parks associated with that keyword. If you click on a specific park from the generated list, the parkcode associated with that park is then passed as a string argument routed to the `search.html` page to display the park (if it exists).
+- Users can select either a park name to see that specific park, or input a keyword to see all the parks associated with that keyword. For a keyword search, if the user clicks on a specific park from the generated list, the parkcode associated with that park is then passed as a string argument routed to the `search.html` page to display the park (if it exists).
 
 #### Displaying relevant park information, visitor centers, campgrounds, alerts, articles, events, news releases about a selected destination, as well as educational acitivites, relevant people, and places associated with the location
 - Series of GET requests to the NPS API to display relevant information.
@@ -49,12 +49,15 @@ This web application serves as a sort of information kiosk for the [National Par
 #### Using relevant symbols from the NPS symbols library
 - Used NPS symbol library SVGs to display relevant information about the selected park.
 - SVGs were chosen over PNGs for several reasons, some of being: 1) Faster loading times 2) Better resolution 3) More responsive
-- All SVGs were placed in a seperate file to create less cluttered and easily maintainable HTML docs.
+- All SVGs were placed in a separate file to create less cluttered and easily maintainable HTML docs.
 
 ## Challenges
-- Initially to compile a list of the parks (497 parks) and states (59 "states", better term is location since it includes non US locations like "Guam") that the user could choose from, I was using a GET request to the NPS API. However, the response took an extremely long time (~60 seconds) and would often crash, the reason for which is still unclear. Thus, Beautiful Soup was used to scrape data from the [National Park Service Advanced Search](https://www.nps.gov/findapark/advanced-search.htm) and this proved to be a more responsive and coherent solution.  
-- Initially, when I was making requests to the NPS API, I would iterate over the JSON response and try to match the the selected park the user chose with the "fullName" key:value pair in the response. However, this didn't prove to be the most optimal approach as many names had HTML characters in their name (e.g. "Haleakal&amp;#257; National Park"; "&amp;#257;" is the HTML code to display an accented a). Also trying to pass along the park names between the HTML pages became cumbersome because of the HTML encoding of special characters in the park names such as &, -, etc. Dealing with this would not be difficult with Python, but would add unnecessariy complexity and verbosity to the code. To accomodate for this, any matching or passing of a park name that had to be done was done by using a much simpler 4 letter park code.  
+- Initially to compile a list of the parks (497 parks) and states (59 "states", better term is location since it includes non US locations like "Guam") that the user could choose from, I was using a GET request to the NPS API. However, the response took an extremely long time (~60 seconds) and would often crash unpredictably, the reason for which is still unclear. Thus, Beautiful Soup was used to scrape data from the [National Park Service Advanced Search](https://www.nps.gov/findapark/advanced-search.htm) and this proved to be a more responsive and coherent solution. In terms of getting the designation values, the API had to be requested multiple times and when it finally returned with a non-empty JSON response, the response was taken and converted into HTML code and hard coded into `designation-search.html`. While not the optimal way, this was the only alternate method I could think of that did not require a request to be made. Sometimes, the request does not work properly and the page gets redirected back to itself if the API responds with an empty JSON. If this happens, it's best to try 1-2 more times in hopes of getting a valid response. 
+
+- Initially, when I was making requests to the NPS API, I would iterate over the JSON response and try to match the selected park the user chose with the "fullName" key:value pair in the response. However, this didn't prove to be the most optimal approach as many names had HTML characters in their name (e.g. "Haleakal&amp;#257; National Park"; "&amp;#257;" is the HTML code to display an accented a). Also trying to pass along the park names between the HTML pages became cumbersome because of the HTML encoding of special characters in the park names such as &, -, etc. Dealing with this would not be difficult with Python, but would add unnecessary complexity and verbosity to the code. To accommodate for this, any matching or passing of a park name that had to be done was done by using a much simpler 4 letter park code.  
+
 - Some aspects of the NPS API seem to be broken. For example, the documentation mentions there will be at least one visitor center listed for each park and there will be at least one picture available for each campground. However, both cases are not true for all the parks listed.
+
 - When making requests to the Google Maps Directions Service API using the latitude and longitude of the selected park and the user, the response status was not always OK. This is most likely due to the location described by the latitude and longitude of the park not being accessible to by road. (e.g. Zion National Park). However, putting in the same latitude and longitude of the park and of the user into Google Maps resulted in a feasible route. So it's plausible Google Maps uses a different API than the Directions Service API. Nonetheless, to work around this, instead of using the latitude and longitude position of the park, the park's name was used in the request to the Google Maps API as a backup, should the geocodes not work properly. If the geocodes were not used, the user will be notified. 
 
 ## Accomplishments

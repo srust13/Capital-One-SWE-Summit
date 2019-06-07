@@ -135,6 +135,10 @@ h3{
     text-align: left;
 }
 
+.list-group-item.list-group-item-action.flex-column.align-items-start:hover{
+    background-color: #F0F0F0;
+}
+
 .list-group-item.list-group-item-action.flex-column.align-items-start{
     border-color: rgb(56,56,56);
     background-color: #f7f7f7;
@@ -144,6 +148,10 @@ p{
     text-align: left;
     margin-top: 0px;
     margin-bottom:10px;
+}
+
+.paragraphSpace{
+    margin-bottom: 30px;
 }
 
 .tab{
