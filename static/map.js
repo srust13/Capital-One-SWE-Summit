@@ -62,7 +62,7 @@ function mapLocation(park, lat, long) {
     function calcRoute(position) 
     {
         // Keeps track of if the alternateParkString is used (if geocodes of park don't suffice, we will use the name of the park for the Google Maps API request )
-        alternate=false;
+        alternate = false;
 
         // User location
         start = new google.maps.LatLng(position.coords.latitude , position.coords.longitude);
@@ -89,7 +89,7 @@ function mapLocation(park, lat, long) {
                 directionsDisplay.setDirections(response);
                 directionsDisplay.setMap(map);
                 getDistance();
-                x.innerHTML=("");
+                x.innerHTML = ("");
             } 
             else 
             {
@@ -99,8 +99,8 @@ function mapLocation(park, lat, long) {
                 {
                     if (status == google.maps.DirectionsStatus.OK) 
                     { 
-                        alternate=true;
-                        x.innerHTML= ("We could not find the exact route since the geographic coordinates provided by the National Park Service aren't acessible by road. Your destination has been redirected to as close as we could get for " +park+". <br/><br/>");                      
+                        alternate = true;
+                        x.innerHTML = ("We could not find the exact route since the geographic coordinates provided by the National Park Service aren't acessible by road. Your destination has been redirected to as close as we could get for " +park+". <br/><br/>");                      
                         directionsDisplay.setDirections(response);
                         directionsDisplay.setMap(map);
                     } 
@@ -122,11 +122,11 @@ function mapLocation(park, lat, long) {
         let service = new google.maps.DistanceMatrixService();
         
         // destination is the parks latitude and longitude information, unless the geoCodes didn't work, in which case destination will be the string literal park name
-        let destination=end;
+        let destination = end;
     
-        if (alternate==true)
+        if (alternate == true)
         {
-            destination=alternateParkString;   
+            destination = alternateParkString;   
         }
 
         // API request for distance between 2 points
@@ -159,7 +159,3 @@ function mapLocation(park, lat, long) {
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 }
-  
-  
-      
-  
