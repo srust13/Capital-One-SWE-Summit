@@ -106,20 +106,23 @@ def search():
             parksURL={}
             aboutParksList=getInfo("parks", "",state,"", "entranceFees")
 
-            # Generate a list of parks that are in the same state as the state selected
-            stateParksList=[park for park in aboutParksList if park.get("states").index(state)>=0]            
-            
-            # Get the images for the parks and store the URL that will be used in the anchor tags in the HTML for the park in a dict 
-            for park in stateParksList:
-                myPark=park.get("parkCode")
-                try:
-                    parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
-                except:
-                    parkPicsURL[myPark] = ""
-                # Attach the URL of each respective park in the list
-                parksURL[myPark]= "/search?parkCode="+myPark    
-            
-            return render_template("state.html",fullStateName=fullStateName, stateParksList=stateParksList, parkPicsURL=parkPicsURL, parksURL=parksURL)
+            if aboutParksList:
+                # Generate a list of parks that are in the same state as the state selected
+                stateParksList=[park for park in aboutParksList if park.get("states").index(state)>=0]            
+                
+                # Get the images for the parks and store the URL that will be used in the anchor tags in the HTML for the park in a dict 
+                for park in stateParksList:
+                    myPark=park.get("parkCode")
+                    try:
+                        parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
+                    except:
+                        parkPicsURL[myPark] = ""
+                    # Attach the URL of each respective park in the list
+                    parksURL[myPark]= "/search?parkCode="+myPark
+                return render_template("state.html",fullStateName=fullStateName, stateParksList=stateParksList, parkPicsURL=parkPicsURL, parksURL=parksURL)
+            else:
+                flash("The search was taking too much time or there were no parks in the selected state. Please try again.")
+                return redirect("/search")
     else:
         # If the user gets to the page with a GET request, such as by clicking a link, render the search menus
         return render_template("search.html",parks=parks,states=states)
@@ -146,7 +149,7 @@ def keyword_search():
                 parksURL[myPark]= "/search?parkCode="+myPark
             return render_template("query.html", query=query, aboutParksList=aboutParksList, parkPicsURL=parkPicsURL, parksURL=parksURL) 
         else:
-            flash("No results were available for your search. Please try a different search")
+            flash("The search was taking too much time or there were no results found for your search. Please try again.")
             return redirect("/keyword-search")
     else:
         return render_template("keyword-search.html")
@@ -178,7 +181,7 @@ def designation_search():
                     parksURL[myPark]= "/search?parkCode="+myPark
             return render_template("designations.html", designation=designation, designationParksList=designationParksList, parkPicsURL=parkPicsURL, parksURL=parksURL) 
         else:
-            flash("No parks were found that fit the selected designation. Please try a different search")
+            flash("The search was taking too much time or there were no parks that fit the selected designation. Please try again.")
             return redirect("/designation-search")
     else:
         return render_template("designation-search.html")
