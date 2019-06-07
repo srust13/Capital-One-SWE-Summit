@@ -30,6 +30,14 @@ nav .navbar-brand .green
     background-color: #f7f7f7;
 }
 
+.navbar-nav.ml-auto.mt-2 li a{
+    color:#4d5b66;
+}
+
+.navbar-nav.ml-auto.mt-2 li a:hover{
+    color: #098bdc;
+}
+
 .cont
 {
     width: auto;    
