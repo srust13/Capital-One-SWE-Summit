@@ -3,7 +3,6 @@ from flask_session import Session
 from tempfile import mkdtemp
 from helpers import parseParkNamesAndStates, getInfo,  parseDates, timeNeeded, getParkPicsURL, parseLatLong
 
-
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
@@ -110,11 +109,15 @@ def search():
                 # Generate a list of parks that are in the same state as the state selected
                 stateParksList = [park for park in aboutParksList if park.get("states").index(state)>=0]            
                 
-                # Get the images for the parks and store the URL that will be used in the anchor tags in the HTML for the park in a dict 
+                # Get the images for the parks and store the URL that will be used in the anchor tags in the HTML for the park in a dict. Get the image from
+                # the API since it can be scaled into a square better, otherwise use the one parsed from NPS site. If both don't exist, use stock image
                 for park in stateParksList:
                     myPark = park.get("parkCode")
                     try:
-                        parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
+                        try:
+                            parkPicsURL[myPark] = getParkPicsURL(myPark)[1]
+                        except:
+                            parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
                     except:
                         parkPicsURL[myPark] = ""
                     # Attach the URL of each respective park in the list
@@ -142,7 +145,10 @@ def keyword_search():
             for park in aboutParksList:
                 myPark = park.get("parkCode")
                 try:
-                    parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
+                    try:
+                        parkPicsURL[myPark] = getParkPicsURL(myPark)[1]
+                    except:
+                        parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
                 except:
                     parkPicsURL[myPark] = ""
                 # Url of the respective park
@@ -170,11 +176,13 @@ def designation_search():
         if aboutParksList:
             for park in aboutParksList:
                 if designation == park.get("designation"):
-                    print(park.get("fullName"))
                     designationParksList.append(park)
                     myPark=park.get("parkCode")
                     try:
-                        parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
+                        try:
+                            parkPicsURL[myPark] = getParkPicsURL(myPark)[1]
+                        except:
+                            parkPicsURL[myPark] = getParkPicsURL(myPark)[0]
                     except:
                         parkPicsURL[myPark] = ""
                     # Url of the respective park

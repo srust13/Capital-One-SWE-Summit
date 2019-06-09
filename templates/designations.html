@@ -6,7 +6,7 @@
 
 {% block main %}
     <br><h1>Parks classified as "{{designation}}"</h1>
-    <small id="warning" align="center" class="form-text text-muted">Click on a park to get more information. </small><br>
+    <small id="warning" align="center" class="form-text text-muted">Click on a park below to get more information. </small><br>
     
     
     <div class="list-group">
@@ -25,7 +25,7 @@
             <a href={{parksURL.get(parkItem.get("parkCode"))}} target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                 <img src={{parkPicsURL.get(parkItem.get("parkCode")) or "../static/default.jpg"}} style="width:150px;height:150px">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ parkItem.get("fullName") }}</h5>
+                    <h5 class="mb-1">{{ parkItem.get("fullName")|safe }}</h5>
                     <br><br>
                 </div>
                 

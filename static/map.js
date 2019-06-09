@@ -71,10 +71,10 @@ function mapLocation(park, lat, long) {
         
         alternateParkString=park;
         
-        // Markers for map. Start is user and end is park
+        // Markers for map. startMarker is user latitude/longitude and endMarker is park latitude/longitude
         let startMarker = new google.maps.Marker({position: start, animation: google.maps.Animation.DROP, map: map});
         let endMarker = new google.maps.Marker({position: end, animation: google.maps.Animation.DROP, map: map});
-        
+            
         let bounds = new google.maps.LatLngBounds();
         bounds.extend(start);
         bounds.extend(end);
@@ -86,7 +86,7 @@ function mapLocation(park, lat, long) {
         {
             if (status == google.maps.DirectionsStatus.OK) 
             {
-                directionsDisplay.setDirections(response);
+               directionsDisplay.setDirections(response);
                 directionsDisplay.setMap(map);
                 getDistance();
                 x.innerHTML = ("");
@@ -100,7 +100,7 @@ function mapLocation(park, lat, long) {
                     if (status == google.maps.DirectionsStatus.OK) 
                     { 
                         alternate = true;
-                        x.innerHTML = ("We could not find the exact route since the geographic coordinates provided by the National Park Service aren't acessible by road. Your destination has been redirected to as close as we could get for " +park+". <br/><br/>");                      
+                        x.innerHTML = ("We could not find the exact route since the geographic coordinates weren't provided by the National Park Service or were provided, but weren't aren't acessible by road. Your destination has been redirected to as close as we could get for " +park+". <br/><br/>");                      
                         directionsDisplay.setDirections(response);
                         directionsDisplay.setMap(map);
                     } 
