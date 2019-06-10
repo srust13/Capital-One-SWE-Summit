@@ -42,9 +42,10 @@ def getInfo(infoType, parkCode, stateCode, parkName, field):
     api = os.environ['NPS_API_KEY']
     results = []
     
-    #Try requesting. If it fails, return an empty array. Condition checked in application.py. Limit set to 500 to ensure all responses get returned instead of 50 by default
+    # Try requesting. If it fails, return an empty array. Condition checked in application.py. Limit set to 500 to ensure all responses get returned instead of 50 by default
+    # Set timeout to 28 sec so if the request takes longer, it can abort it. This will prevent default Heroku 30 second timeout error page from showing up.
     try:
-        endpoint = requests.get(f"{url}/{infoType}?parkCode={parkCode}&stateCode={stateCode}&limit=500&q={parkName.replace(' ','%20')}&fields={field}&api_key={api}")
+        endpoint = requests.get(f"{url}/{infoType}?parkCode={parkCode}&stateCode={stateCode}&limit=500&q={parkName.replace(' ','%20')}&fields={field}&api_key={api}", timeout=28)
         data = endpoint.json() 
 
         #if a park code is provided, make sure each item in the JSON response matches the park code. Matching by parkCode was chosen instead of by full name (see README)
