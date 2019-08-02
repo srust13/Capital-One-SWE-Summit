@@ -1,4 +1,4 @@
-# Capital One Software Engineering Summit MindSumo Challenge
+# (Winner) Capital One Software Engineering Summit MindSumo Challenge
 
 Website: https://shubhamrustagi-capitalone.herokuapp.com 
 
